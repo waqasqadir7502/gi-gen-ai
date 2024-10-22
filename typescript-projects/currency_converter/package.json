@@ -1,0 +1,19 @@
+{
+  "name": "currency-converter",
+  "version": "1.0.0",
+  "description": "\"A simple currency convertor made with Typesript, Nodejs and Inquirer\"",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+   
+    "inquirer": "^9.3.2"
+  },
+  "dev-Dependencies": {
+    "@types/inquirer": "^9.0.7"
+  }
+}
