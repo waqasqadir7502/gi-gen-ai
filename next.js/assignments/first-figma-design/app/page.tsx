@@ -29,7 +29,9 @@ export default function Home() {
             sint. Velit officia consequat duis enim velit mollit. Exercitation
             veniam consequat sunt nostrud amet.
           </p>
-          <button className="hero-btn">Download Resume</button>
+          <div className="hero-btn">
+          <button >Download Resume</button>
+          </div>
         </div>
         <div className="hero-sec-2">
           <Image
