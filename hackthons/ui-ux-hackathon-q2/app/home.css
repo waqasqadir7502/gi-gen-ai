@@ -1,0 +1,286 @@
+/* Hero Section */
+
+.hero-section {
+  width: 100%;
+  max-width: 1920px;
+  height: 764px;
+  background: #f2f0ff;
+  position: relative;
+}
+
+.hero-pic-1 {
+  position: absolute;
+  top: 0;
+  left: 70px;
+}
+
+.hero-pic-2 {
+  position: absolute;
+  right: 240px;
+}
+
+.hero-pic-3 {
+  position: absolute;
+  left: 180px;
+  bottom: 220px;
+}
+
+.hero-inner-section {
+  width: 1177px;
+}
+
+.hero-p-1 {
+  font-family: Lato;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 28px;
+  color: #fb2e86;
+}
+
+.hero-heading {
+  font-family: Josefin Sans;
+  font-size: 48px;
+  line-height: 81.98px;
+  letter-spacing: 0.015em;
+  text-align: left;
+  font-weight: 600;
+}
+
+.hero-p-2 {
+  font-family: Lato;
+  font-size: 15px;
+  font-weight: 700;
+  line-height: 28px;
+  text-align: left;
+  color: #8a8fb9;
+}
+
+.shopnowbtn {
+  width: 163px;
+  height: 50px;
+  margin-top: 20px;
+  border-radius: 2px 0px 0px 0px;
+  opacity: 0px;
+  background-color: #fb2e86;
+  color: #ffffff;
+}
+
+.hero-pagi {
+  position: absolute;
+  bottom: 40px;
+}
+
+/* Featured Products */
+.featured-pro {
+  width: 1177px;
+}
+
+.featured-sec {
+  height: 700px;
+}
+
+.featured-sec h2 {
+  font-family: Josefin Sans;
+  font-size: 42px;
+  line-height: 49.22px;
+  margin: 40px;
+  font-weight: 600;
+  color: #1a0b5b;
+}
+
+.product {
+  width: 270px;
+  height: 361px;
+  box-shadow: 0px 0px 25px 0px #0000001a;
+}
+
+.product-img {
+  width: 270px;
+  height: 236px;
+  background: #f6f7fb;
+}
+
+.featured-pro-name {
+  font-family: Lato;
+  font-size: 18px;
+  font-weight: 700;
+  line-height: 21.6px;
+  color: #fb2e86;
+}
+
+.color-btn-1 {
+  width: 14px;
+  height: 4px;
+  border-radius: 10px;
+  background-color: #05e6b7;
+}
+
+.color-btn-2 {
+  width: 14px;
+  height: 4px;
+  border-radius: 10px;
+  background-color: #f701a8;
+}
+
+.color-btn-3 {
+  width: 14px;
+  height: 4px;
+  border-radius: 10px;
+  background-color: #00009d;
+}
+
+.featured-para {
+  font-family: Josefin Sans;
+  font-size: 14px;
+  line-height: 16.41px;
+  color: #1a0b5b;
+}
+
+/* featured 2nd product */
+.second-prod {
+  position: relative;
+  background-color: #2F1AC4;
+}
+
+.producticons {
+  position: absolute;
+  top: 20px;
+  left: 20px;
+}
+
+.featured-vm-btn {
+  position: absolute;
+  width: 94px;
+  height: 29px;
+  top: 198px;
+  left: 95px;
+  gap: 0px;
+  border-radius: 2px;
+  background-color: #08d15f;
+  color: #ffffff;
+}
+
+.second-prod-details p {
+  color: #ffffff;
+}
+
+.second-prod-btn {
+  background-color: #FFEAC1;
+}
+
+.btn-1 {
+  width: 24px;
+  height: 4px;
+  border-radius: 10px;
+  background-color: #f701a8;
+}
+
+.pagi-btn {
+  width: 16px;
+  height: 4px;
+  border-radius: 10px;
+  background-color: #FEBAD7;
+}
+
+/* Latest Section */
+
+.latest-sec {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.latest-sec h2{
+font-family: Josefin Sans;
+font-size: 42px;
+line-height: 49.22px;
+font-weight: 600;
+color: #151875;
+
+}
+.latest-prod-grid {
+  width: 1177px;
+}
+.arrival-para{
+  color: #FB2E86 !important;
+  font-family: Lato;
+font-size: 18px;
+font-weight: 400;
+line-height: 21.6px;
+text-decoration: underline;
+cursor: pointer;
+
+}
+.latest-option p{
+  color: #151875;
+  font-family: Lato;
+  font-size: 18px;
+  font-weight: 400;
+  line-height: 21.6px;
+  cursor: pointer;
+}
+
+.latest-prod {
+  width: 360px;
+  height: 306px;
+}
+
+.latest-prod-img {
+  width: 360px;
+  height: 269.96px;
+  background: #F7F7F7;
+}
+
+.latest-prod-name {
+  color: #151875;
+}
+
+.underline {
+  width: 153.73px;
+  height: 0px;
+  border: 2px solid #EEEFFB;
+
+}
+.latest-prod-price{
+  color: #151875;
+  font-size: 14px;
+}
+.latest-discounted{
+  text-decoration: line-through;
+  color: #FB2448;
+  font-size: 12px;
+}
+
+/* Offer Section */
+.offer-card-sec{
+  width: 1177px;
+}
+
+.offer-sec h2{
+  font-family: Josefin Sans;
+  font-size: 42px;
+  line-height: 49.22px;
+  color: #151875;
+  font-weight: 600;
+}
+
+.offer-card{
+  width: 270px;
+  height: 320px;
+  box-shadow: 0px 8px 40px 0px #31208A0D;
+}
+
+.offer-card-p{
+font-family: Josefin Sans;
+font-size: 22px;
+line-height: 25.78px;
+color: #151875;
+}
+
+.offer-card-descrip{
+  font-family: Lato;
+font-size: 16px;
+font-weight: 500;
+line-height: 25.6px;
+color: #1A0B5B4D;
+
+}
