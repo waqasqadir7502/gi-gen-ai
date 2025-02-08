@@ -94,7 +94,7 @@ export default function Navbar() {
                 </li>
                 <li>Pages</li>
                 <li>
-                  <Link href="/products">Products</Link>
+                  <Link href="/grid-default">Products</Link>
                 </li>
                 <li>
                   <Link href="/blog">Blog</Link>

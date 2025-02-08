@@ -1,8 +1,9 @@
 import Image from "next/image";
-import Link from "next/link";
+// import Link from "next/link";
 import "./shopbar.css"
+import { JSX } from "react";
 
-export default function ShopBar():any{
+export default function ShopBar():JSX.Element{
     return(
     <div className="top-shop-bar flex justify-center align-center ">
         <div className="top-shop-inner flex justify-between items-center">
