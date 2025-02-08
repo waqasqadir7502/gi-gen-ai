@@ -1,0 +1,49 @@
+.account-sec{
+    height: 700px;
+}
+.accounts-inner {
+    width: 1177px;
+}
+
+.sign-in-form {
+    width: 544px;
+    height: 474px;
+    box-shadow: 0px 0px 25px 10px #F8F8FB;
+}
+
+.sign-in-form h3 {
+    font-family: Josefin Sans;
+    font-size: 32px;
+    line-height: 37.5px;
+    text-align: center;
+    color: #000000;
+}
+
+.sign-in-form p {
+    font-family: Lato;
+    font-size: 17px;
+    font-weight: 400;
+    text-align: center;
+    color: #9096B2;
+}
+.sign-in-form input {
+    width: 432px;
+    height: 52px;
+    border-radius: 2px;
+    border: 1px solid #C2C5E1;
+    padding-left: 15px;
+    font: 16px;
+}
+
+.sign-in-form button {
+    width: 432px;
+    height: 47px;
+    border-radius: 3px;
+    background-color: #FB2E86;
+    color: #ffffff;
+}
+
+.brand-banner{
+    height: 250px;
+}
+

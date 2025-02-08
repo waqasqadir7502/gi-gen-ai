@@ -1,0 +1,87 @@
+.about-sec {
+  height: 700px;
+}
+.about-inner {
+  width: 1177px;
+}
+
+.about-col-2 h3 {
+  font-family: Josefin Sans;
+  font-size: 36px;
+  font-weight: 600;
+  line-height: 48px;
+  color: #151875;
+}
+
+.about-col-2 p {
+  font-family: Lato;
+  font-size: 16px;
+  line-height: 25.6px;
+  color: #8a8fb9;
+  margin-top: 20px;
+}
+
+.about-col-2 button {
+  width: 145px;
+  height: 44px;
+  border-radius: 3px;
+  background-color: #fb2e86;
+  color: #ffffff;
+}
+
+/* Offer Section */
+.offer-sec {
+  margin-bottom: 100px;
+}
+
+.offer-card-sec {
+  width: 1177px;
+}
+
+.offer-sec h2 {
+  font-family: Josefin Sans;
+  font-size: 42px;
+  line-height: 49.22px;
+  color: #000000;
+  font-weight: 600;
+  margin-bottom: 50px;
+}
+
+.offer-card {
+  width: 270px;
+  height: 320px;
+  box-shadow: 0px 8px 40px 0px #31208a0d;
+}
+
+.offer-card-p {
+  font-family: Josefin Sans;
+  font-size: 22px;
+  line-height: 25.78px;
+  color: #151875;
+}
+
+.offer-card-descrip {
+  font-family: Lato;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 25.6px;
+  color: #1a0b5b4d;
+}
+
+/* Client Section */
+.client-sec {
+  background-color: #fbfbff;
+  height: 503px;
+  margin-bottom: 300px;
+}
+.client-inner {
+  width: 1177px;
+}
+.client-inner h3{
+    font-family: Josefin Sans;
+    font-size: 42px;
+    font-weight: 600;
+    line-height: 25.6px;
+    color: #000000;    
+    margin-bottom: 50px;
+}

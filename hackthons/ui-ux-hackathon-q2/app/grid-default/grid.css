@@ -1,0 +1,72 @@
+.products {
+    width: 1177px;
+}
+
+.prod {
+    width: 270px;
+    height: 363px;
+    transition: 0.3s ease-in-out;
+}
+
+.prod:hover{
+    box-shadow: 0px 0px 5px grey;
+}
+
+.prod-img {
+    width: 270px;
+    height: 280px;
+    background-color: #F6F7FB;
+    transition: 0.3s ease-in-out;
+}
+
+.prod-img:hover{
+    background-color:#EBF4F3 ;
+}
+
+.prod-details h3 {
+    font-family: Josefin Sans;
+    font-size: 18px;
+    font-weight: 700;
+    color: #151875;
+    margin: 10px 0px 5px 0px;
+}
+
+.prod-details p {
+    font-family: Josefin Sans;
+    font-size: 14px;
+    font-weight: 400;
+    color: #151875;
+    margin: 10px 0px 10px 0px;
+}
+
+.prod-details p>span {
+    font-family: Josefin Sans;
+    font-size: 14px;
+    font-weight: 400;
+    text-decoration-line: line-through;
+    color: #FB2E86;
+    
+}
+
+/* Buttons */
+
+.gold {
+    width: 10px;
+    height: 10px;
+    border-radius: 50px;
+    background-color: #DE9034;
+}
+
+.pink{
+    width: 10px;
+    height: 10px;
+    border-radius: 50px;
+    background-color: #EC42A2;
+}
+
+.violet{
+    width: 10px;
+    height: 10px;
+    border-radius: 50px;
+    background-color: #8568FF;
+}

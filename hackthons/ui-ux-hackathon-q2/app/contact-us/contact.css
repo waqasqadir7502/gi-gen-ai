@@ -1,0 +1,137 @@
+.contact-inner {
+  width: 1177px;
+}
+
+/* Top Section / Col 1 */
+.contact-top{
+  height: 350px;
+}
+.top-col-1 h3 {
+  font-family: Josefin Sans;
+  font-size: 36px;
+  font-weight: 600;
+  line-height: 48px;
+  color: #151875;
+  margin-bottom: 20px;
+}
+
+.contact-top .top-col-1 p {
+  font-family: Lato;
+  font-size: 16px;
+  line-height: 25.6px;
+  color: #8a8fb9;
+  margin-bottom: 20px;
+}
+
+/* Dots */
+.dot-pink {
+  width: 25px;
+  height: 25px;
+  background-color: #ff27b7;
+  border-radius: 50%;
+}
+.dot-pink-big {
+  width: 45px;
+  height: 45px;
+  background-color: #ff27b7;
+  border-radius: 50%;
+}
+.dot-purple {
+  width: 25px;
+  height: 25px;
+  background-color: #5625df;
+  border-radius: 50%;
+}
+.dot-purple-big {
+  width: 45px;
+  height: 45px;
+  background-color: #5625df;
+  border-radius: 50%;
+}
+.dot-teal {
+  width: 25px;
+  height: 25px;
+  background-color: #37daf3;
+  border-radius: 50%;
+}
+.dot-yellow-big {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  background-color: #ffb265;
+}
+.dot-green-big {
+  width: 45px;
+  height: 45px;
+  background-color: #1be982;
+  border-radius: 50%;
+}
+
+/* Top Col 2 */
+.top-col-2 h3 {
+  font-family: Josefin Sans;
+  font-size: 36px;
+  font-weight: 600;
+  line-height: 48px;
+  color: #151875;
+  margin-bottom: 20px;
+}
+.contact-top .top-col-2 p {
+  font-family: Lato;
+  font-size: 16px;
+  line-height: 25.6px;
+  color: #8a8fb9;
+}
+/* Bottom Section / Bottom col 1 */
+.contact-bottom{
+  height: 700px;
+}
+
+.bottom-col-1 h3{
+  font-family: Josefin Sans;
+  font-size: 36px;
+  font-weight: 600;
+  line-height: 48px;
+  color: #151875;
+  margin-bottom: 20px;
+}
+
+.bottom-col-1 p{
+  font-family: Lato;
+  font-size: 16px;
+  line-height: 25.6px;
+  color: #8a8fb9;
+  margin-bottom: 20px;
+}
+
+.bottom-col-1 input{
+  width: 534px;
+height: 45px;
+border-radius: 3px;
+border: 1px solid #A4B6C8B2;
+padding-left: 5px;
+}
+.bottom-col-1 textarea{
+  width: 534px;
+height: 166px;
+border-radius: 3px;
+border: 1px;
+border: 1px solid #A4B6C8B2;
+padding-top: 10px;
+padding-left: 5px;
+}
+.top-inp input{
+  width: 255px;
+height: 45px;
+border-radius: 3px;
+border: 1px solid #A4B6C8B2;
+padding-left: 5px;
+}
+
+.bottom-col-1 button{
+  width: 157px;
+height: 44px;
+border-radius: 3px ;
+color: #ffffff;
+background-color: #FB2E86;
+}

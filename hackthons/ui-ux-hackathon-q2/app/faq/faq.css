@@ -1,0 +1,75 @@
+
+.faq-sec{
+    height: 1000px;
+}
+.faq-inner {
+    width: 1177px;
+
+}
+
+.faq-col-1 h3 {
+    font-family: Josefin Sans;
+    font-weight: 600;
+    font-size: 36px;
+    line-height: 30px;
+    color: #1D3178;
+    margin-bottom: 50px;
+}
+.faq-questions{
+    margin-bottom: 50px;
+}
+
+.question {
+    font-family: Josefin Sans;
+    font-size: 17px;
+    font-weight: 600;
+    line-height: 30px;
+    color: #1D3178;
+    margin-bottom: 10px;
+}
+
+.answer {
+    font-family: Josefin Sans;
+    font-size: 16px;
+    line-height: 30px;
+    color: #A1ABCC;
+}
+
+.faq-col-2 {
+    background-color: #F8F8FD;
+    height: 738px;
+    padding: 50px 40px 50px 40px;
+}
+
+.faq-col-2 h3{
+    font-family: Josefin Sans;
+font-size: 24px;
+font-weight: 600;
+line-height: 30px;
+color: #1D3178;
+}
+.faq-form input{
+    width: 445px;
+height: 50px;
+border-radius: 5px ;
+border: 1px solid #CDCEDC;
+margin-bottom: 30px;
+padding-left: 10px;
+}
+
+.faq-form textarea{
+    width: 445px;
+height: 197px;
+border-radius: 5px 0px 0px 0px;
+border: 1px solid #CDCEDC;
+margin-bottom: 30px;
+padding: 10px;
+}
+
+.faq-form button{
+    width: 156px;
+height: 48px;
+border-radius: 3px;
+background-color: #FB2E86;
+color: #ffffff;
+}

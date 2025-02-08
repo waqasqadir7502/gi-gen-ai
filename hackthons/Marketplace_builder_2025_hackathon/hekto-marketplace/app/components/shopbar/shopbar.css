@@ -1,0 +1,70 @@
+.top-shop-inner {
+  width: 1177px;
+  height: 300px;
+}
+
+/* Col-1 */
+
+.shop-col-1 h3 {
+  font-family: Josefin Sans;
+  font-size: 22px;
+  line-height: 25.78px;
+  font-weight: 600;
+  color: #151875;
+}
+.shop-col-1 p {
+  font-family: Lato;
+  font-size: 12px;
+  font-weight: 400;
+  color: #8a8fb9;
+}
+
+/* Col-2 */
+
+.page-per p {
+  font-family: Lato;
+  font-size: 16px;
+  font-weight: 400;
+  color: #3f509e;
+}
+
+.page-per input {
+  width: 55px;
+  height: 25px;
+  border: 1px solid #e7e6ef;
+  outline: none;
+}
+
+.sort-by p{
+    font-family: Lato;
+    font-size: 16px;
+    font-weight: 400;
+    color: #3f509e;
+}
+
+.sort-by select{
+    width: 96px;
+    height: 28px;
+    border: 1px solid #e7e6ef;
+    outline: none;
+    color: #8A8FB9 ;
+    font-family: Lato;
+    font-size: 12px;
+    font-weight: 400;
+    
+}
+
+
+
+.view p{
+    font-family: Lato;
+    font-size: 16px;
+    font-weight: 400;
+    color: #3f509e;
+}
+
+.view input{
+    width: 162px;
+    height: 30px;
+    border: 1px solid #E7E6EF
+}

@@ -1,0 +1,51 @@
+.order-comp-sec {
+  height: 700px;
+  background: url("../../public/ordercomplete/clock.png"),
+    url("../../public/ordercomplete/checklist.png");
+  background-repeat: no-repeat, no-repeat;
+  background-position: 418px 250px, 1446px 535px;
+}
+
+.order-comp-inner {
+  width: 978px;
+  height: 270px;
+}
+.inner-2 {
+  width: 978px;
+  height: 220px;
+  border-width: 0px 0px 2px 2px;
+  border-style: dashed;
+  border-color: #d2d1d1;
+}
+
+.order-comp-title {
+  font-family: Josefin Sans;
+  font-size: 36px;
+  line-height: 42.19px;
+  font-weight: 600;
+  color: #101750;
+  margin-bottom: 10px;
+}
+
+.order-comp-para {
+  text-align: center;
+  font-family: Lato;
+  font-size: 16px;
+  line-height: 30px;
+  color: #8d92a7;
+}
+
+.continue-btn {
+  margin-top: 30px;
+  width: 208px;
+  height: 59px;
+  border-radius: 3px;
+  color: #ffffff;
+  background-color: #ff1788;
+}
+
+/* Brand Banner */
+
+.brand-banner{
+    height: 220px;
+}
