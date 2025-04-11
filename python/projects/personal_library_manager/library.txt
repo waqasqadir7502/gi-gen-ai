@@ -1,0 +1,30 @@
+[
+    {
+        "title": " Gotham City",
+        "author": " Bruce Wayne",
+        "year": " 2009",
+        "genre": " Thriller",
+        "read": false
+    },
+    {
+        "title": "Harry potter and the prisoner of azkaban",
+        "author": "jk rowling",
+        "year": "2002",
+        "genre": "sorcery",
+        "read": false
+    },
+    {
+        "title": "The great gatsby",
+        "author": "Scott Fitzgerld ",
+        "year": "1925",
+        "genre": "Fiction",
+        "read": true
+    },
+    {
+        "title": "Harry Potter",
+        "author": "JK Rowling ",
+        "year": "1995",
+        "genre": "Fiction",
+        "read": false
+    }
+]
