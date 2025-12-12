@@ -1,0 +1,15 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(powershell -ExecutionPolicy Bypass -File \".specify/scripts/powershell/create-new-feature.ps1\" -Json -Number 1 -ShortName \"physical-ai-book\" \"Physical AI Book Specification\")",
+      "Bash(.specify/scripts/powershell/check-prerequisites.ps1 -Json -PathsOnly)",
+      "Bash(git rev-parse --git-dir)",
+      "Bash(npm install --verbose)",
+      "Bash(python -c \"import numpy as np; print(''NumPy version:'', np.__version__)\")",
+      "Bash(pip install scipy matplotlib)",
+      "Bash(python test_fusion.py)",
+      "Bash(python -c \"import scipy; print(''SciPy available'')\")",
+      "Bash(python -c \"import scipy; import matplotlib; print(''SciPy and Matplotlib available'')\")"
+    ]
+  }
+}

@@ -31,7 +31,13 @@
 
 *GATE: Must pass before Phase 0 research. Re-check after Phase 1 design.*
 
-[Gates determined based on constitution file]
+For Physical AI and Humanoid Robotics Book project:
+- All content must be accessible to AI beginners and intermediate learners
+- Every chapter must include practical examples, small exercises, or mini-projects
+- All content must be properly formatted for Docusaurus documentation platform
+- Content should build progressively from basic to advanced topics
+- Emphasis must be placed on practical, implementable solutions
+- Maintain consistent terminology, formatting, and teaching style across all chapters
 
 ## Project Structure
 

@@ -1,55 +1,47 @@
-# [PROJECT_NAME] Constitution
-<!-- Example: Spec Constitution, TaskFlow Constitution, etc. -->
+<!-- SYNC IMPACT REPORT
+Version change: N/A -> 1.0.0
+Modified principles: None (new constitution)
+Added sections: All sections (new constitution)
+Removed sections: None
+Templates requiring updates:
+- .specify/templates/plan-template.md ✅ updated
+- .specify/templates/spec-template.md ✅ updated
+- .specify/templates/tasks-template.md ✅ updated
+- .specify/templates/commands/*.md ⚠ pending (no specific command files to update)
+Templates requiring updates:
+- README.md ⚠ pending (if exists)
+Follow-up TODOs: None
+-->
+
+# Physical AI and Humanoid Robotics Book Constitution
 
 ## Core Principles
 
-### [PRINCIPLE_1_NAME]
-<!-- Example: I. Library-First -->
-[PRINCIPLE_1_DESCRIPTION]
-<!-- Example: Every feature starts as a standalone library; Libraries must be self-contained, independently testable, documented; Clear purpose required - no organizational-only libraries -->
+### I. Beginner-Friendly Accessibility
+All content must be accessible to AI beginners and intermediate learners. Technical concepts should be explained with clear analogies, step-by-step breakdowns, and practical examples that connect theory to real-world applications in humanoid robotics.
 
-### [PRINCIPLE_2_NAME]
-<!-- Example: II. CLI Interface -->
-[PRINCIPLE_2_DESCRIPTION]
-<!-- Example: Every library exposes functionality via CLI; Text in/out protocol: stdin/args → stdout, errors → stderr; Support JSON + human-readable formats -->
+### II. Hands-On Learning Approach
+Every chapter must include practical examples, small exercises, or mini-projects that allow readers to apply concepts immediately. Theory without practice is insufficient - each concept should have corresponding hands-on activities.
 
-### [PRINCIPLE_3_NAME]
-<!-- Example: III. Test-First (NON-NEGOTIABLE) -->
-[PRINCIPLE_3_DESCRIPTION]
-<!-- Example: TDD mandatory: Tests written → User approved → Tests fail → Then implement; Red-Green-Refactor cycle strictly enforced -->
+### III. Docusaurus-Optimized Formatting
+All content must be properly formatted for Docusaurus documentation platform with clean Markdown structure, consistent navigation, and proper integration with the site's theme and features.
 
-### [PRINCIPLE_4_NAME]
-<!-- Example: IV. Integration Testing -->
-[PRINCIPLE_4_DESCRIPTION]
-<!-- Example: Focus areas requiring integration tests: New library contract tests, Contract changes, Inter-service communication, Shared schemas -->
+### IV. Progressive Complexity Building
+Content should build progressively from basic concepts to advanced topics, ensuring each chapter builds logically on previous knowledge while maintaining accessibility for readers joining at different levels.
 
-### [PRINCIPLE_5_NAME]
-<!-- Example: V. Observability, VI. Versioning & Breaking Changes, VII. Simplicity -->
-[PRINCIPLE_5_DESCRIPTION]
-<!-- Example: Text I/O ensures debuggability; Structured logging required; Or: MAJOR.MINOR.BUILD format; Or: Start simple, YAGNI principles -->
+### V. Practical Application Focus
+Emphasis must be placed on practical, implementable solutions rather than purely theoretical concepts. Code examples should be functional, tested, and directly applicable to physical AI and humanoid robotics projects.
 
-### [PRINCIPLE_6_NAME]
+### VI. Educational Consistency
+Maintain consistent terminology, formatting, and teaching style across all chapters and sections to provide a unified learning experience throughout the entire book.
 
+## Content Quality Standards
+All content must meet high educational standards: explanations should be clear and jargon-free when possible, examples must be relevant to humanoid robotics applications, and mathematical concepts should be simplified unless essential for understanding. All code samples must be well-commented and tested.
 
-[PRINCIPLE__DESCRIPTION]
-
-## [SECTION_2_NAME]
-<!-- Example: Additional Constraints, Security Requirements, Performance Standards, etc. -->
-
-[SECTION_2_CONTENT]
-<!-- Example: Technology stack requirements, compliance standards, deployment policies, etc. -->
-
-## [SECTION_3_NAME]
-<!-- Example: Development Workflow, Review Process, Quality Gates, etc. -->
-
-[SECTION_3_CONTENT]
-<!-- Example: Code review requirements, testing gates, deployment approval process, etc. -->
+## Documentation Workflow
+Content creation follows a structured workflow: topic identification → outline creation → draft writing → peer review → testing of examples → publication. All content undergoes technical accuracy verification and educational effectiveness review before publication.
 
 ## Governance
-<!-- Example: Constitution supersedes all other practices; Amendments require documentation, approval, migration plan -->
+This constitution governs all content creation for the Physical AI and Humanoid Robotics book. All contributions must comply with these principles. Amendments require documentation of changes and approval from project maintainers. All content must be reviewed for compliance with accessibility and educational standards.
 
-[GOVERNANCE_RULES]
-<!-- Example: All PRs/reviews must verify compliance; Complexity must be justified; Use [GUIDANCE_FILE] for runtime development guidance -->
-
-**Version**: [CONSTITUTION_VERSION] | **Ratified**: [RATIFICATION_DATE] | **Last Amended**: [LAST_AMENDED_DATE]
-<!-- Example: Version: 2.1.1 | Ratified: 2025-06-13 | Last Amended: 2025-07-16 -->
+**Version**: 1.0.0 | **Ratified**: 2025-12-12 | **Last Amended**: 2025-12-12
