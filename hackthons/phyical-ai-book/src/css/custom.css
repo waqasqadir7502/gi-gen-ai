@@ -10,6 +10,17 @@
  * This is a CSS file that uses CSS variables to customize the appearance.
  */
 
+/* :root {
+  --ifm-color-primary: #25c2a0;
+  --ifm-color-primary-dark: rgb(33, 175, 144);
+  --ifm-color-primary-darker: rgb(31, 165, 136);
+  --ifm-color-primary-darkest: rgb(26, 136, 112);
+  --ifm-color-primary-light: rgb(70, 203, 174);
+  --ifm-color-primary-lighter: rgb(102, 212, 189);
+  --ifm-color-primary-lightest: rgb(146, 224, 208);
+  --docusaurus-highlighted-code-line-bg: rgba(0, 0, 0, 0.3);
+} */
+
 /* For light theme */
 :root {
   --ifm-color-primary: #2980b9;
@@ -19,22 +30,6 @@
   --ifm-color-primary-light: #3091cc;
   --ifm-color-primary-lighter: #3a99d3;
   --ifm-color-primary-lightest: #55a7d9;
-
-  /* Background colors */
-  --ifm-background-color: #ffffff;
-  --ifm-background-surface-color: #f8f9fa;
-
-  /* Text colors */
-  --ifm-font-color-base: #242526;
-  --ifm-font-color-base-inverse: #ffffff;
-  --ifm-font-color-secondary: #525860;
-
-  /* Border colors */
-  --ifm-border-color: #dadde1;
-  --ifm-code-background: rgb(246, 247, 248);
-
-  /* Shadow */
-  --ifm-global-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.05);
 }
 
 /* For dark theme */
@@ -46,22 +41,6 @@
   --ifm-color-primary-light: #63b3f8;
   --ifm-color-primary-lighter: #78c0fa;
   --ifm-color-primary-lightest: #91cefb;
-
-  /* Background colors */
-  --ifm-background-color: #1a1d22;
-  --ifm-background-surface-color: #1e2126;
-
-  /* Text colors */
-  --ifm-font-color-base: #e3e5e8;
-  --ifm-font-color-base-inverse: #000000;
-  --ifm-font-color-secondary: #a0a2a7;
-
-  /* Border colors */
-  --ifm-border-color: #34383d;
-  --ifm-code-background: #2a2d32;
-
-  /* Shadow */
-  --ifm-global-shadow: 0 1px 2px 0 rgba(0, 0, 0, 0.3);
 }
 
 /* Custom styles for Physical AI and Humanoid Robotics book */
@@ -69,35 +48,8 @@
   background: linear-gradient(135deg, #2980b9, #3498db);
 }
 
-[data-theme='dark'] .hero--primary {
-  background: linear-gradient(135deg, #1c7ed6, #228ae6);
-}
-
 .footer--dark {
   background-color: #1a2332 !important;
-}
-
-[data-theme='dark'] .footer--dark {
-  background-color: #0d1117 !important;
-}
-
-/* Navigation bar styling */
-.navbar {
-  background-color: var(--ifm-background-color);
-  border-bottom: 1px solid var(--ifm-border-color);
-}
-
-[data-theme='dark'] .navbar {
-  border-bottom: 1px solid var(--ifm-border-color);
-}
-
-/* Sidebar styling */
-.menu {
-  background-color: var(--ifm-background-color);
-}
-
-[data-theme='dark'] .menu {
-  background-color: var(--ifm-background-color);
 }
 
 /* Code block styling */
@@ -112,178 +64,13 @@
   background-color: rgba(0, 0, 0, 0.3);
 }
 
-/* Inline code styling */
-.codeInline {
-  background-color: var(--ifm-code-background);
-  border: 1px solid var(--ifm-border-color);
-  border-radius: 0.2rem;
-  padding: 0.1rem 0.2rem;
-}
-
-[data-theme='dark'] .codeInline {
-  border: 1px solid var(--ifm-border-color);
-}
-
-/* Block code styling */
-.prism-code {
-  background-color: var(--ifm-code-background);
-  border: 1px solid var(--ifm-border-color);
-  border-radius: 0.5rem;
-  padding: 1rem;
-}
-
-[data-theme='dark'] .prism-code {
-  border: 1px solid var(--ifm-border-color);
-}
-
-/* Card styling */
-.card {
-  border: 1px solid var(--ifm-border-color);
-  box-shadow: var(--ifm-global-shadow);
-}
-
-[data-theme='dark'] .card {
-  border: 1px solid var(--ifm-border-color);
-}
-
-/* Admonitions */
-.alert {
-  border-left: 0.25rem solid var(--ifm-color-emphasis-500);
-}
-
-.alert--info {
-  --ifm-alert-background-color: #e7f5ff;
-  --ifm-alert-border-color: #74c0fc;
-}
-
-.alert--tip {
-  --ifm-alert-background-color: #d3f9d8;
-  --ifm-alert-border-color: #69db7c;
-}
-
-.alert--warning {
-  --ifm-alert-background-color: #fff3bf;
-  --ifm-alert-border-color: #ffd43b;
-}
-
-.alert--danger {
-  --ifm-alert-background-color: #ffe3e6;
-  --ifm-alert-border-color: #ffa8af;
-}
-
-/* Dark theme admonitions */
-[data-theme='dark'] .alert--info {
-  --ifm-alert-background-color: #1e2b3a;
-  --ifm-alert-border-color: #339af0;
-}
-
-[data-theme='dark'] .alert--tip {
-  --ifm-alert-background-color: #1e3a2a;
-  --ifm-alert-border-color: #40c057;
-}
-
-[data-theme='dark'] .alert--warning {
-  --ifm-alert-background-color: #3a341e;
-  --ifm-alert-border-color: #fcc419;
-}
-
-[data-theme='dark'] .alert--danger {
-  --ifm-alert-background-color: #3a1e23;
-  --ifm-alert-border-color: #ff6b7a;
-}
-
 /* Table styling */
 .markdown table {
   display: table;
   table-layout: fixed;
-  border-collapse: collapse;
-  width: 100%;
-  margin: 1rem 0;
 }
 
 .markdown table th,
 .markdown table td {
   word-break: break-word;
-  padding: 0.5rem 1rem;
-  border: 1px solid var(--ifm-border-color);
-}
-
-.markdown table th {
-  background-color: var(--ifm-background-surface-color);
-  font-weight: 600;
-}
-
-[data-theme='dark'] .markdown table th {
-  background-color: var(--ifm-background-surface-color);
-}
-
-/* Buttons */
-.button {
-  border: 1px solid transparent;
-  border-radius: var(--ifm-button-border-radius);
-  color: var(--ifm-button-color);
-  cursor: pointer;
-  display: inline-block;
-  font-family: var(--ifm-font-family-base);
-  font-size: var(--ifm-button-size);
-  font-weight: var(--ifm-button-weight);
-  line-height: var(--ifm-button-line-height);
-  padding: var(--ifm-button-padding-vertical) var(--ifm-button-padding-horizontal);
-  text-align: center;
-  transition: color 0.25s cubic-bezier(0.08, 0.52, 0.52, 1),
-    background 0.25s cubic-bezier(0.08, 0.52, 0.52, 1),
-    border 0.25s cubic-bezier(0.08, 0.52, 0.52, 1),
-    box-shadow 0.25s cubic-bezier(0.08, 0.52, 0.52, 1);
-  vertical-align: middle;
-}
-
-/* Search bar */
-.DocSearch-Button {
-  border: 1px solid var(--ifm-color-emphasis-300);
-  background-color: var(--ifm-menu-background-color);
-}
-
-[data-theme='dark'] .DocSearch-Button {
-  border: 1px solid var(--ifm-color-emphasis-500);
-  background-color: var(--ifm-background-color);
-}
-
-/* Links */
-.markdown a {
-  text-decoration: none;
-}
-
-.markdown a:hover {
-  text-decoration: underline;
-}
-
-/* Heading anchors */
-.anchor {
-  scroll-margin-top: calc(var(--ifm-navbar-height) + 0.5rem);
-}
-
-/* Better contrast for accessibility */
-[data-theme='dark'] {
-  --ifm-color-gray-100: #f8f9fa;
-  --ifm-color-gray-200: #e9ecef;
-  --ifm-color-gray-300: #dee2e6;
-  --ifm-color-gray-400: #ced4da;
-  --ifm-color-gray-500: #adb5bd;
-  --ifm-color-gray-600: #6c757d;
-  --ifm-color-gray-700: #495057;
-  --ifm-color-gray-800: #343a40;
-  --ifm-color-gray-900: #212529;
-
-  /* Dark theme specific overrides */
-  --ifm-color-emphasis-0: #ffffff;
-  --ifm-color-emphasis-100: #f8f9fa;
-  --ifm-color-emphasis-200: #e9ecef;
-  --ifm-color-emphasis-300: #dee2e6;
-  --ifm-color-emphasis-400: #ced4da;
-  --ifm-color-emphasis-500: #adb5bd;
-  --ifm-color-emphasis-600: #6c757d;
-  --ifm-color-emphasis-700: #495057;
-  --ifm-color-emphasis-800: #343a40;
-  --ifm-color-emphasis-900: #212529;
-  --ifm-color-emphasis-1000: #000000;
 }
