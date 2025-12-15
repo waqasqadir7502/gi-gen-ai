@@ -14,7 +14,8 @@ const config = {
   url: 'https://your-organization.github.io',
   // Set the /<baseUrl>/ pathname under which your site is served
   // For GitHub pages deployment, it is often '/<organization-name>/'
-  baseUrl: '/physical-ai-book',
+  // baseUrl: '/physical-ai-book',
+  baseUrl: '/', //For Vercel Deployment
 
   // GitHub pages deployment config.
   organizationName: 'your-organization', // Usually your GitHub org/user name.
