@@ -1,0 +1,55 @@
+# -----------------------------
+# Node.js / Docusaurus
+node_modules/
+.build/
+.docusaurus/
+dist/
+build/
+
+# Logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+
+# -----------------------------
+# Python (if you used Python scripts)
+__pycache__/
+*.pyc
+.venv/
+venv/
+env/
+.Python
+.tox/
+.coverage
+.coverage.*
+.cache/
+htmlcov/
+
+# -----------------------------
+# OS-specific
+.DS_Store
+Thumbs.db
+
+# -----------------------------
+# IDE/editor
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# -----------------------------
+# Environment variables
+.env
+!.env.example
+
+# -----------------------------
+# Jupyter Notebooks
+.ipynb_checkpoints
+
+# -----------------------------
+# Whitelist your main content folders
+!hackthons/ai-book-hackathon/**
+!docs/**
+!src/**
