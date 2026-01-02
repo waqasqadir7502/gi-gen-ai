@@ -1,0 +1,98 @@
+project_metadata:
+  name: The Evolution of Todo
+  phase: Phase I - Todo In-Memory Python Console App
+  description: A command-line todo application that stores tasks entirely in memory
+  date: January 02, 2026
+
+overview:
+  theme: This project simulates the real-world evolution of software, starting with a simple script and progressing toward a Kubernetes-managed, event-driven, AI-powered distributed system.
+  focus: Build a command-line todo application that stores tasks entirely in memory (no persistence; data is lost when the program exits).
+
+objectives:
+  - Implement a fully functional in-memory todo console application
+  - Demonstrate adherence to spec-driven development methodology
+  - Showcase the Agentic Dev Stack workflow (Write spec → Generate plan → Break into tasks → Implement via AI)
+  - Follow clean code principles and Python best practices
+
+features:
+  add_task:
+    description: Add a task with title and description
+    acceptance_criteria:
+      - User can add a task with a unique incremental integer ID (starting from 1)
+      - Title is required and must be a non-empty string
+      - Description is optional
+      - Completed status defaults to false
+      - Proper error handling for empty titles
+  delete_task:
+    description: Delete a task by ID
+    acceptance_criteria:
+      - User can delete a task by specifying its ID
+      - Proper error handling for non-existent IDs
+  update_task:
+    description: Update task details (title and/or description) by ID
+    acceptance_criteria:
+      - User can update title and/or description of a task by specifying its ID
+      - Proper error handling for non-existent IDs
+      - Validation to ensure title is not empty if being updated
+  view_tasks:
+    description: View/List all tasks with status indicators
+    acceptance_criteria:
+      - Display all tasks with ID, title, status indicator ([ ] for incomplete, [x] for complete), and description preview
+      - Show "No tasks" message if the list is empty
+  mark_task:
+    description: Mark a task as complete or incomplete by ID
+    acceptance_criteria:
+      - User can mark a task as complete or incomplete by specifying its ID
+      - Proper error handling for non-existent IDs
+
+user_interface:
+  type: Interactive console application
+  interaction: Menu-driven or command-based loop
+  commands:
+    - "add: Add a new task"
+    - "delete: Delete a task by ID"
+    - "update: Update task details by ID"
+    - "list: View all tasks"
+    - "complete: Mark a task as complete"
+    - "incomplete: Mark a task as incomplete"
+    - "quit: Exit the application"
+
+data_model:
+  task_structure:
+    id: Unique incremental integer ID (starting from 1)
+    title: Required non-empty string
+    description: Optional string
+    completed: Boolean, default false
+  storage: In-memory using Python data structures (list/dict)
+
+technical_constraints:
+  - No external dependencies beyond the Python standard library
+  - Follow clean code principles: PEP 8 compliance, meaningful names, modularity, docstrings, type hints
+  - Use Python 3.13+ features where appropriate
+  - No manual coding or editing of generated code is allowed
+
+tech_stack:
+  package_management: UV
+  language: Python 3.13+
+  spec_management: Spec-Kit Plus
+  code_generation: Qwen Code (primary) and Claude Code (for planning/specs)
+
+project_structure:
+  expected_directories:
+    - src/: Contains all AI-generated Python source code
+    - specs_history/: Contains all specification files and iterations
+  expected_files:
+    - constitution.yaml: This file at the root
+    - README.md: Project overview, setup instructions, and feature demonstration
+
+deliverables:
+  - constitution.yaml at the root of the repository
+  - specs_history/ folder with all specification files and iterations
+  - src/ folder with all AI-generated Python source code
+  - README.md with project overview, setup instructions, and feature demonstration
+
+evaluation_criteria:
+  process: The process (prompts, spec iterations, planning quality) will be reviewed
+  methodology: Adherence to spec-driven development methodology
+  tooling: Overall use of Spec-Kit Plus and AI Code tools
+  quality: Quality of specifications, plans, and generated code
