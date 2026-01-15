@@ -58,7 +58,8 @@
       "Bash(python scripts/setup_database.py)",
       "Bash(dir \"C:\\\\Users\\\\Waqas\\\\AppData\\\\Local\\\\Temp\\\\claude\\\\D--Profession-Studies-Coding-GI-AI-Hackathon-phyical-ai-book\\\\tasks\"\")",
       "Bash(powershell Get-ChildItem \"C:\\\\Users\\\\Waqas\\\\AppData\\\\Local\\\\Temp\\\\claude\\\\D--Profession-Studies-Coding-GI-AI-Hackathon-phyical-ai-book\\\\tasks\\\\\")",
-      "Bash(curl -X POST http://localhost:8001/api/chat -H \"Content-Type: content-type: application/json\" -H \"X-API-Key: test-key\" -d \"{\"\"message\"\":\"\"Hello, how are you?\"\"}\")"
+      "Bash(curl -X POST http://localhost:8001/api/chat -H \"Content-Type: content-type: application/json\" -H \"X-API-Key: test-key\" -d \"{\"\"message\"\":\"\"Hello, how are you?\"\"}\")",
+      "Bash(npm run build)"
     ]
   }
 }

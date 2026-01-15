@@ -6,7 +6,11 @@ class TextSelectionManager {
   constructor() {
     this.selectedText = '';
     this.onSelectionChange = null;
-    this.init();
+
+    // Only initialize if running in browser environment
+    if (typeof window !== 'undefined' && typeof document !== 'undefined') {
+      this.init();
+    }
   }
 
   init() {
@@ -19,6 +23,11 @@ class TextSelectionManager {
   }
 
   handleSelectionChange() {
+    // Only run if in browser environment
+    if (typeof window === 'undefined' || typeof document === 'undefined') {
+      return;
+    }
+
     const selection = window.getSelection();
     const selectedText = selection.toString().trim();
 
@@ -57,6 +66,11 @@ class TextSelectionManager {
    * Get selection context (surrounding text, element info)
    */
   getSelectionContext() {
+    // Only run if in browser environment
+    if (typeof window === 'undefined' || typeof document === 'undefined') {
+      return null;
+    }
+
     const selection = window.getSelection();
     if (!selection.rangeCount) return null;
 
@@ -80,7 +94,7 @@ class TextSelectionManager {
       element: selectedElement,
       contextBefore,
       contextAfter,
-      rect: range.getBoundingClientRect(),
+      rect: range.getBoundingClientRect ? range.getBoundingClientRect() : { left: 0, top: 0, width: 0, height: 0 },
       elementInfo: {
         tagName: selectedElement.parentElement?.tagName || selectedElement.tagName || 'TEXT_NODE',
         className: selectedElement.parentElement?.className || selectedElement.className || '',
@@ -93,6 +107,12 @@ class TextSelectionManager {
    * Clear current selection
    */
   clearSelection() {
+    // Only run if in browser environment
+    if (typeof window === 'undefined' || typeof document === 'undefined') {
+      this.selectedText = '';
+      return;
+    }
+
     if (window.getSelection) {
       window.getSelection().removeAllRanges();
     } else if (document.selection) {
@@ -127,6 +147,10 @@ class TextSelectionManager {
       return null;
     }
 
+    // Only access scrollX and scrollY if in browser environment
+    const scrollX = typeof window !== 'undefined' ? window.scrollX : 0;
+    const scrollY = typeof window !== 'undefined' ? window.scrollY : 0;
+
     return {
       selectedText: context.text,
       sourceElement: context.elementInfo,
@@ -135,8 +159,8 @@ class TextSelectionManager {
         after: context.contextAfter
       },
       position: {
-        x: context.rect.left + window.scrollX,
-        y: context.rect.top + window.scrollY,
+        x: context.rect.left + scrollX,
+        y: context.rect.top + scrollY,
         width: context.rect.width,
         height: context.rect.height
       }
