@@ -1,0 +1,27 @@
+[
+  {
+    "question": "What is the Physical AI Book about?",
+    "expected_sources": ["README.md", "docs/chapter-template.md"],
+    "category": "general"
+  },
+  {
+    "question": "How is the content structured?",
+    "expected_sources": ["docs/content-standards.md"],
+    "category": "structure"
+  },
+  {
+    "question": "What are the main topics covered?",
+    "expected_sources": ["docs/chapter-template.md", "docs/content-standards.md"],
+    "category": "topics"
+  },
+  {
+    "question": "How do I contribute to this book?",
+    "expected_sources": ["docs/content-standards.md"],
+    "category": "contribution"
+  },
+  {
+    "question": "What is the purpose of the Physical AI Book?",
+    "expected_sources": ["README.md"],
+    "category": "purpose"
+  }
+]

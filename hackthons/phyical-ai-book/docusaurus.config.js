@@ -52,6 +52,17 @@ const config = {
     ],
   ],
 
+  themes: [
+    // ... other themes
+  ],
+
+  plugins: [
+    // Removed non-existent plugin
+  ],
+
+  staticDirectories: ['static'],
+
+
   themeConfig:
     /** @type {import('@docusaurus/preset-classic').ThemeConfig} */
     ({

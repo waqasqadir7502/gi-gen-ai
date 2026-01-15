@@ -1,0 +1,61 @@
+name: Re-index Documentation
+
+on:
+  push:
+    branches: [ main ]
+    paths:
+      - 'docs/**'
+      - 'src/**'
+      - 'backend/**'
+  workflow_dispatch: # Allow manual triggering
+
+jobs:
+  reindex:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout code
+      uses: actions/checkout@v3
+
+    - name: Set up Python
+      uses: actions/setup-python@v4
+      with:
+        python-version: '3.10'
+
+    - name: Install dependencies
+      run: |
+        cd backend
+        pip install -r requirements.txt
+
+    - name: Run re-indexing
+      env:
+        COHERE_API_KEY: ${{ secrets.COHERE_API_KEY }}
+        QDRANT_URL: ${{ secrets.QDRANT_URL }}
+        QDRANT_API_KEY: ${{ secrets.QDRANT_API_KEY }}
+        BACKEND_API_KEY: ${{ secrets.BACKEND_API_KEY }}
+      run: |
+        cd backend
+        python scripts/ingest_docs.py --docs-path ../docs
+
+    - name: Verify re-indexing
+      run: |
+        echo "Re-indexing completed successfully!"
+
+    - name: Notify on failure
+      if: failure()
+      uses: slackapi/slack-github-action@v1.24.0
+      with:
+        webhook: ${{ secrets.SLACK_WEBHOOK }}
+        payload: |
+          {
+            "text": "❌ Documentation re-indexing failed for ${{ github.repository }}",
+            "blocks": [
+              {
+                "type": "section",
+                "text": {
+                  "type": "mrkdwn",
+                  "text": ":x: Documentation re-indexing failed for ${{ github.repository }}\nCommit: ${{ github.event.head_commit.message }}"
+                }
+              }
+            ]
+          }

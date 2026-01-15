@@ -1,8 +1,8 @@
 <!-- SYNC IMPACT REPORT
-Version change: N/A -> 1.0.0
-Modified principles: None (new constitution)
-Added sections: All sections (new constitution)
-Removed sections: None
+Version change: 1.0.0 -> 1.1.0
+Modified principles: None (completely new constitution for different project)
+Added sections: All sections (new constitution for RAG Chatbot Integration)
+Removed sections: Old Physical AI and Humanoid Robotics principles
 Templates requiring updates:
 - .specify/templates/plan-template.md ✅ updated
 - .specify/templates/spec-template.md ✅ updated
@@ -13,35 +13,38 @@ Templates requiring updates:
 Follow-up TODOs: None
 -->
 
-# Physical AI and Humanoid Robotics Book Constitution
+# Floating RAG Chatbot Integration for Physical AI Digital Book Constitution
 
 ## Core Principles
 
-### I. Beginner-Friendly Accessibility
-All content must be accessible to AI beginners and intermediate learners. Technical concepts should be explained with clear analogies, step-by-step breakdowns, and practical examples that connect theory to real-world applications in humanoid robotics.
+### I. Maximum Answer Accuracy and Faithfulness
+The chatbot must provide answers that are strictly faithful to source material with a zero-hallucination policy. All responses must be grounded in documented content from the book, with clear attribution to specific sources when possible.
 
-### II. Hands-On Learning Approach
-Every chapter must include practical examples, small exercises, or mini-projects that allow readers to apply concepts immediately. Theory without practice is insufficient - each concept should have corresponding hands-on activities.
+### II. Reasonable Content Freshness with Minimal Effort
+Content updates should require minimal manual effort and must work within zero paid infrastructure constraints. The system should prioritize simplicity and maintainability over complex automated freshness mechanisms.
 
-### III. Docusaurus-Optimized Formatting
-All content must be properly formatted for Docusaurus documentation platform with clean Markdown structure, consistent navigation, and proper integration with the site's theme and features.
+### III. Clean, Non-Destructive Integration
+All integration work must follow clean, maintainable practices that integrate seamlessly into the existing Docusaurus project without disrupting current functionality. Changes should be minimal and reversible.
 
-### IV. Progressive Complexity Building
-Content should build progressively from basic concepts to advanced topics, ensuring each chapter builds logically on previous knowledge while maintaining accessibility for readers joining at different levels.
+### IV. Source Material Quality Over Automation Complexity
+Prioritize the quality and reliability of source materials over complex automation. High-quality content from reliable sources is preferred over sophisticated but risky automation processes.
 
-### V. Practical Application Focus
-Emphasis must be placed on practical, implementable solutions rather than purely theoretical concepts. Code examples should be functional, tested, and directly applicable to physical AI and humanoid robotics projects.
+### V. Privacy-First Design
+Never log user questions, selected text, or responses. The system must be designed to protect user privacy by default, with no personally identifiable information stored or transmitted.
 
-### VI. Educational Consistency
-Maintain consistent terminology, formatting, and teaching style across all chapters and sections to provide a unified learning experience throughout the entire book.
+### VI. Security-First Architecture
+No LLM keys should ever be exposed client-side. All sensitive information must be properly secured, and the architecture must prevent client-side exposure of API keys or other sensitive data.
 
-## Content Quality Standards
-All content must meet high educational standards: explanations should be clear and jargon-free when possible, examples must be relevant to humanoid robotics applications, and mathematical concepts should be simplified unless essential for understanding. All code samples must be well-commented and tested.
+## Content Sourcing Standards
+Content sourcing must follow this strict priority order: (1) Local markdown files from /docs folder as the primary source, (2) Rendered HTML via sitemap.xml + content extraction as fallback, (3) All other methods are out of scope for v1. This ensures the highest quality and most reliable content sources.
 
-## Documentation Workflow
-Content creation follows a structured workflow: topic identification → outline creation → draft writing → peer review → testing of examples → publication. All content undergoes technical accuracy verification and educational effectiveness review before publication.
+## Integration Requirements
+The chatbot must integrate using Docusaurus recommended patterns (Root wrapper preferred), appear as a floating bottom-right widget, support selected text as strong context, and avoid any external third-party chat services or widgets. The integration should be seamless and unobtrusive.
+
+## Data Freshness Policy
+For MVP phase, content is a controlled snapshot taken at ingestion time. Acceptable update delay is measured in days to weeks, with manual or semi-automated re-indexing as acceptable. Real-time or per-query live fetching is explicitly out of scope.
 
 ## Governance
-This constitution governs all content creation for the Physical AI and Humanoid Robotics book. All contributions must comply with these principles. Amendments require documentation of changes and approval from project maintainers. All content must be reviewed for compliance with accessibility and educational standards.
+This constitution governs all development for the Floating RAG Chatbot Integration project. All contributions must comply with these principles. Amendments require documentation of changes and approval from project maintainers. The system must be reviewed for compliance with accuracy, privacy, and security standards.
 
-**Version**: 1.0.0 | **Ratified**: 2025-12-12 | **Last Amended**: 2025-12-12
+**Version**: 1.1.0 | **Ratified**: 2026-01-13 | **Last Amended**: 2026-01-13
