@@ -37,10 +37,10 @@ app.add_middleware(
 )
 
 # Add TrustedHost middleware for production
-app.add_middleware(
-    TrustedHostMiddleware,
-    allowed_hosts=["localhost", "127.0.0.1", "0.0.0.0", "*.vercel.app", "physical-ai-book-lilac.vercel.app", "*.example.com"],
-)
+# app.add_middleware(
+#     TrustedHostMiddleware,
+#     allowed_hosts=["localhost", "127.0.0.1", "0.0.0.0", "*.vercel.app", "physical-ai-book-lilac.vercel.app", "*.example.com"],
+# )
 
 # Add security headers manually since FastAPI doesn't have a built-in security middleware
 @app.middleware("http")
