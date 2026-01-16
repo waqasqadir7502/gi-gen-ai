@@ -9,7 +9,12 @@
   "routes": [
     {
       "src": "/(.*)",
-      "dest": "backend/main.py"
+      "dest": "/backend/main.py"
     }
-  ]
+  ],
+  "functions": {
+    "backend/main.py": {
+      "runtime": "@vercel/python@4.3.1"
+    }
+  }
 }

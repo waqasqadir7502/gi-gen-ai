@@ -18,7 +18,10 @@ load_dotenv()
 app = FastAPI(
     title="Physical AI Book RAG Chatbot API",
     description="API for the Physical AI Book RAG Chatbot",
-    version="1.0.0"
+    version="1.0.0",
+    # Disable docs in production, enable for troubleshooting
+    docs_url="/docs",
+    redoc_url="/redoc"
 )
 
 # Add security and performance middlewares
@@ -27,20 +30,19 @@ app.add_middleware(
     minimum_size=1000,
 )
 
-# Add CORS middleware with specific origins (avoid wildcard in production)
+# Add CORS middleware with specific origins (more secure than wildcard)
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # In production, replace with specific domains
+    allow_origins=[
+        "http://localhost:3000",
+        "http://localhost:3001",
+        "https://physical-ai-book.vercel.app",
+        "https://*.vercel.app"
+    ],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
-
-# Add TrustedHost middleware for production
-# app.add_middleware(
-#     TrustedHostMiddleware,
-#     allowed_hosts=["localhost", "127.0.0.1", "0.0.0.0", "*.vercel.app", "physical-ai-book-lilac.vercel.app", "*.example.com"],
-# )
 
 # Add security headers manually since FastAPI doesn't have a built-in security middleware
 @app.middleware("http")
@@ -69,7 +71,11 @@ app.include_router(chat_router)
 
 @app.get("/")
 def read_root():
-    return {"message": "Physical AI Book RAG Chatbot API is running"}
+    return {"message": "Physical AI Book RAG Chatbot API is running", "status": "operational"}
+
+@app.get("/health")
+def simple_health():
+    return {"status": "healthy", "service": "api-main"}
 
 if __name__ == "__main__":
     import uvicorn
