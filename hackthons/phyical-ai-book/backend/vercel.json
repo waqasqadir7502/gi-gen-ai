@@ -1,0 +1,22 @@
+{
+  "version": 2,
+  "builds": [
+    {
+      "src": "backend/main.py",
+      "use": "@vercel/python"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/(.*)",
+      "dest": "backend/main.py"
+    }
+  ],
+  "functions": {
+    "backend/main.py": {
+      "memory": 1024,
+      "maxDuration": 30,
+      "excludeFiles": "{tests/**,__pycache__/**,scripts/**,docs/**,.git/**,*.md,*.pyc,fixtures/**,testdata/**,sample-data/**,static/**,assets/**,build/**,node_modules/**,src/**,.next/**,.cache/**}"
+    }
+  }
+}
