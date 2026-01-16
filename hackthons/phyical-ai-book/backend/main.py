@@ -2,19 +2,15 @@ import os
 import sys
 from pathlib import Path
 
-# Add the project root to the Python path
-project_root = Path(__file__).parent.parent
-sys.path.insert(0, str(project_root))
-
 from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.middleware.trustedhost import TrustedHostMiddleware
 from fastapi.middleware.gzip import GZipMiddleware
 from dotenv import load_dotenv
 
-# Import the routers using absolute imports
-from backend.api.health import router as health_router
-from backend.api.chat import router as chat_router
+# Import the routers using relative imports
+from api.health import router as health_router
+from api.chat import router as chat_router
 
 # Load environment variables
 load_dotenv()
@@ -60,15 +56,12 @@ async def add_security_headers(request, call_next):
     return response
 
 # Initialize database connection if configured
-import sys
-from pathlib import Path
-
-# Add the backend directory to the Python path to allow imports
-backend_dir = Path(__file__).parent
-sys.path.insert(0, str(backend_dir))
-
-from utils.db_connection import db_manager
-# Note: Database tables will be created when first accessed or manually initialized
+try:
+    from utils.db_connection import db_manager
+    # Note: Database tables will be created when first accessed or manually initialized
+except ImportError:
+    # Database module is optional, so we don't fail if it's not available
+    pass
 
 # Include routers
 app.include_router(health_router)

@@ -13,11 +13,11 @@
 # beautifulsoup4==4.12.3
 # tiktoken==0.8.0
 
-# Recommended minimal requirements.txt for your RAG API on Vercel
+# Minimal requirements.txt for your RAG API on Vercel
 fastapi==0.115.0
-uvicorn[standard]==0.32.0
+uvicorn==0.32.0
 cohere==5.11.0
-qdrant-client==1.12.1     # ← this is the biggest offender, but keep for now
+qdrant-client==1.12.1
 python-dotenv==1.0.1
 PyJWT==2.9.0
 requests==2.32.3
@@ -25,4 +25,3 @@ markdown==3.7
 mistune==3.0.2
 httpx==0.27.2
 beautifulsoup4==4.12.3
-# Remove: numpy, asyncio (not needed as dep), tiktoken
