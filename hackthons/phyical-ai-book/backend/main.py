@@ -1,16 +1,14 @@
 import os
-import sys
 from pathlib import Path
 
-from fastapi import FastAPI, HTTPException
+from fastapi import FastAPI, HTTPException, Request
 from fastapi.middleware.cors import CORSMiddleware
-from fastapi.middleware.trustedhost import TrustedHostMiddleware
 from fastapi.middleware.gzip import GZipMiddleware
 from dotenv import load_dotenv
 
-# Import the routers using relative imports
-from api.health import router as health_router
-from api.chat import router as chat_router
+# Use absolute imports to avoid path confusion in serverless
+from backend.api.health import router as health_router
+from backend.api.chat import router as chat_router
 
 # Load environment variables
 load_dotenv()
@@ -19,8 +17,7 @@ app = FastAPI(
     title="Physical AI Book RAG Chatbot API",
     description="API for the Physical AI Book RAG Chatbot",
     version="1.0.0",
-    # Disable docs in production, enable for troubleshooting
-    docs_url="/docs",
+    docs_url="/docs",    # keep for debugging
     redoc_url="/redoc"
 )
 
@@ -30,25 +27,24 @@ app.add_middleware(
     minimum_size=1000,
 )
 
-# Add CORS middleware with specific origins (more secure than wildcard)
+# CORS - safe, specific origins (add more as needed)
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[
         "http://localhost:3000",
         "http://localhost:3001",
-        "https://physical-ai-book.vercel.app",
-        "https://*.vercel.app"
+        "https://physical-ai-book-lilac.vercel.app",
+        "https://*.vercel.app"          # wildcard for preview deploys
     ],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
-# Add security headers manually since FastAPI doesn't have a built-in security middleware
+# Your custom security headers (unchanged)
 @app.middleware("http")
-async def add_security_headers(request, call_next):
+async def add_security_headers(request: Request, call_next):
     response = await call_next(request)
-    # Add security headers
     response.headers["X-Content-Type-Options"] = "nosniff"
     response.headers["X-Frame-Options"] = "DENY"
     response.headers["X-XSS-Protection"] = "1; mode=block"
@@ -59,25 +55,27 @@ async def add_security_headers(request, call_next):
 
 # Initialize database connection if configured
 try:
-    from utils.db_connection import db_manager
+    from backend.utils.db_connection import db_manager
     # Note: Database tables will be created when first accessed or manually initialized
 except ImportError:
     # Database module is optional, so we don't fail if it's not available
     pass
 
-# Include routers
+# Include routers (unchanged)
 app.include_router(health_router)
 app.include_router(chat_router)
 
-
+# Health check endpoint (simple & useful)
 @app.get("/health")
 def simple_health():
     return {"status": "healthy", "service": "api-main"}
 
+# Root endpoint for basic verification
 @app.get("/")
 def read_root():
     return {"message": "Physical AI Book RAG Chatbot API is running", "status": "operational"}
 
-if __name__ == "__main__":
-    import uvicorn
-    uvicorn.run(app, host="0.0.0.0", port=8001)
+# Optional: add this back only for local development if you want
+# if __name__ == "__main__":
+#     import uvicorn
+#     uvicorn.run(app, host="0.0.0.0", port=8001)
