@@ -44,7 +44,7 @@ const ChatWindow = ({ onClose, onMinimize }) => {
           const controller = new AbortController();
           const timeoutId = setTimeout(() => controller.abort(), 30000); // 30 second timeout
 
-          response = await fetch('http://localhost:8001/api/chat', {
+          response = await fetch('/api/chat', {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',
