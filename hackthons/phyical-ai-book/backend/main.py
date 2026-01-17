@@ -69,13 +69,14 @@ except ImportError:
 app.include_router(health_router)
 app.include_router(chat_router)
 
-@app.get("/")
-def read_root():
-    return {"message": "Physical AI Book RAG Chatbot API is running", "status": "operational"}
 
 @app.get("/health")
 def simple_health():
     return {"status": "healthy", "service": "api-main"}
+
+@app.get("/")
+def read_root():
+    return {"message": "Physical AI Book RAG Chatbot API is running", "status": "operational"}
 
 if __name__ == "__main__":
     import uvicorn
