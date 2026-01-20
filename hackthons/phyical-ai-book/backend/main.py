@@ -1,12 +1,15 @@
 import os
 from pathlib import Path
 
-from fastapi import FastAPI, HTTPException, Request
+from fastapi import FastAPI, Request
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.middleware.gzip import GZipMiddleware
 from dotenv import load_dotenv
+from qdrant_client import QdrantClient
+from qdrant_client.http.models import VectorParams, Distance
+from qdrant_client.http.exceptions import UnexpectedResponse
 
-# Use absolute imports to avoid path confusion in serverless
+# Absolute imports (safe for Vercel serverless)
 from backend.api.health import router as health_router
 from backend.api.chat import router as chat_router
 
@@ -21,27 +24,27 @@ app = FastAPI(
     redoc_url="/redoc"
 )
 
-# Add security and performance middlewares
+# Performance middleware
 app.add_middleware(
     GZipMiddleware,
     minimum_size=1000,
 )
 
-# CORS - safe, specific origins (add more as needed)
+# CORS - safe origins
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[
         "http://localhost:3000",
         "http://localhost:3001",
         "https://physical-ai-book-lilac.vercel.app",
-        "https://*.vercel.app"          # wildcard for preview deploys
+        "https://*.vercel.app"
     ],
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
-# Your custom security headers (unchanged)
+# Security headers middleware (unchanged)
 @app.middleware("http")
 async def add_security_headers(request: Request, call_next):
     response = await call_next(request)
@@ -53,29 +56,61 @@ async def add_security_headers(request: Request, call_next):
     response.headers["Permissions-Policy"] = "geolocation=(), microphone=(), camera=()"
     return response
 
-# Initialize database connection if configured
+# Safe, idempotent Qdrant collection setup (runs on startup but never crashes)
+def ensure_qdrant_collection():
+    try:
+        client = QdrantClient(
+            url=os.getenv("QDRANT_URL"),
+            api_key=os.getenv("QDRANT_API_KEY"),
+        )
+        collection_name = "physical-ai-book-v1"
+
+        if not client.has_collection(collection_name):
+            client.create_collection(
+                collection_name=collection_name,
+                vectors_config=VectorParams(size=1024, distance=Distance.COSINE),
+            )
+            print(f"[Startup] Created Qdrant collection: {collection_name}")
+        else:
+            print(f"[Startup] Qdrant collection {collection_name} already exists - skipping")
+    except UnexpectedResponse as e:
+        if e.status_code == 409:  # Already exists
+            print(f"[Startup] Collection already exists (safe)")
+        else:
+            print(f"[Startup] Qdrant warning: {e}")
+    except Exception as e:
+        print(f"[Startup] Qdrant setup warning (continuing): {str(e)}")
+        # NEVER raise or exit here - let API start anyway
+
+# Run collection check on startup (safe & non-blocking)
+ensure_qdrant_collection()
+
+# Optional DB init (unchanged, safe)
 try:
     from backend.utils.db_connection import db_manager
-    # Note: Database tables will be created when first accessed or manually initialized
 except ImportError:
-    # Database module is optional, so we don't fail if it's not available
-    pass
+    pass  # Optional
 
-# Include routers (unchanged)
+# Include routers
 app.include_router(health_router)
 app.include_router(chat_router)
 
-# Health check endpoint (simple & useful)
+# Health check (enhanced)
 @app.get("/health")
 def simple_health():
-    return {"status": "healthy", "service": "api-main"}
+    return {
+        "status": "healthy",
+        "service": "api-main",
+        "qdrant": "connected" if os.getenv("QDRANT_URL") else "not configured",
+        "cohere": "configured" if os.getenv("COHERE_API_KEY") else "missing"
+    }
 
-# Root endpoint for basic verification
+# Root endpoint
 @app.get("/")
 def read_root():
     return {"message": "Physical AI Book RAG Chatbot API is running", "status": "operational"}
 
-# Optional: add this back only for local development if you want
+# Optional local dev block (commented - safe to leave)
 # if __name__ == "__main__":
 #     import uvicorn
 #     uvicorn.run(app, host="0.0.0.0", port=8001)
