@@ -1,51 +1,32 @@
 from fastapi import APIRouter, HTTPException, Depends, Request
 from pydantic import BaseModel
 from typing import List, Dict, Any, Optional
-from ..services.retrieval_service import retrieval_service
-from ..services.generation_service import generation_service
-from ..middleware.auth import verify_api_key
-from ..middleware.rate_limiter import check_rate_limit
-from ..utils.logger import log_info, log_error
-from ..config import config
-from qdrant_client import QdrantClient
-from qdrant_client.http.exceptions import UnexpectedResponse
+import os
+
+# Handle relative imports for direct execution
+try:
+    from ..config import config
+    from ..services.retrieval_service import retrieval_service
+    from ..services.generation_service import generation_service
+    from ..middleware.auth import verify_api_key
+    from ..middleware.rate_limiter import check_rate_limit
+    from ..utils.logger import log_info, log_error
+except (ImportError, ValueError):
+    # Fallback for direct execution
+    import sys
+    from pathlib import Path
+    # Add the backend directory to the path
+    backend_dir = Path(__file__).parent.parent
+    sys.path.insert(0, str(backend_dir))
+
+    from config import config
+    from services.retrieval_service import retrieval_service
+    from services.generation_service import generation_service
+    from middleware.auth import verify_api_key
+    from middleware.rate_limiter import check_rate_limit
+    from utils.logger import log_info, log_error
 
 router = APIRouter(prefix="/api", tags=["chat"])
-
-# Safe, global Qdrant client (initialized lazily, no crash on import/startup)
-_qdrant_client = None
-
-def get_qdrant_client():
-    global _qdrant_client
-    if _qdrant_client is None:
-        try:
-            _qdrant_client = QdrantClient(
-                url=config.QDRANT_URL,
-                api_key=config.QDRANT_API_KEY,
-            )
-            collection_name = "physical-ai-book-v1"
-            
-            if not _qdrant_client.has_collection(collection_name):
-                _qdrant_client.create_collection(
-                    collection_name=collection_name,
-                    vectors_config={"size": 1024, "distance": "Cosine"}
-                )
-                log_info(f"Created Qdrant collection: {collection_name}")
-            else:
-                log_info(f"Qdrant collection {collection_name} already exists - using existing")
-                
-        except UnexpectedResponse as e:
-            if e.status_code == 409:
-                log_info("Collection already exists (safe)")
-            else:
-                log_error(f"Qdrant connection warning: {e}")
-        except Exception as e:
-            log_error(f"Qdrant init failed (continuing): {str(e)}")
-    
-    if _qdrant_client is None:
-        raise HTTPException(500, "Qdrant client not initialized")
-    
-    return _qdrant_client
 
 # Define request/response models (unchanged)
 class ChatRequest(BaseModel):
@@ -70,13 +51,9 @@ async def chat_endpoint(request: ChatRequest):
             "session_id": request.session_id
         })
 
-        # Get safe Qdrant client
-        qdrant_client = get_qdrant_client()
-
         # Step 1: Retrieve relevant chunks
-        retrieved_chunks = retrieval_service.retrieve_and_rerank(
+        retrieved_chunks = retrieval_service.retrieve_relevant_chunks(
             query=request.question,
-            context=request.context,
             top_k=config.TOP_K
         )
 
@@ -89,7 +66,7 @@ async def chat_endpoint(request: ChatRequest):
             )
 
         # Step 2: Generate response
-        generation_result = generation_service.generate_summarized_response(
+        generation_result = generation_service.generate_response(
             query=request.question,
             context_chunks=retrieved_chunks,
             selected_context=request.context
@@ -131,17 +108,15 @@ async def chat_endpoint(request: ChatRequest):
             metadata={"retrieval_success": False, "processing_error": True}
         )
 
-# Health endpoint (enhanced with Qdrant check)
+# Health endpoint (simplified)
 @router.get("/health")
 async def chat_health():
     try:
-        client = get_qdrant_client()  # Safe init
         return {
             "status": "healthy",
             "service": "chat-api",
             "dependencies": {
                 "cohere": "configured" if config.COHERE_API_KEY else "missing",
-                "qdrant": "connected",
                 "retrieval_service": "ready",
                 "generation_service": "ready"
             }

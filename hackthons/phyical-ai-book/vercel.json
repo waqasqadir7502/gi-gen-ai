@@ -8,7 +8,10 @@
     {
       "src": "package.json",
       "use": "@vercel/static-build",
-      "config": { "distDir": "build" }
+      "config": {
+        "distDir": "build",
+        "buildCommand": "npm run build"
+      }
     }
   ],
   "routes": [
@@ -18,6 +21,6 @@
     { "src": "/redoc", "dest": "/api/index.py" },
 
     { "handle": "filesystem" },
-    { "src": "/.*", "dest": "/" }
+    { "src": "/(.*)", "dest": "/" }
   ]
 }

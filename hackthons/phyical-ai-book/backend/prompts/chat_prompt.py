@@ -1,5 +1,17 @@
 from typing import List, Dict, Any
-from ..config import config
+
+# Handle relative import for direct execution
+try:
+    from ..config import config
+except (ImportError, ValueError):
+    # Fallback for direct execution
+    import sys
+    from pathlib import Path
+    # Add the backend directory to the path
+    backend_dir = Path(__file__).parent.parent
+    sys.path.insert(0, str(backend_dir))
+
+    from config import config
 
 class ChatPromptEngineer:
     def __init__(self):

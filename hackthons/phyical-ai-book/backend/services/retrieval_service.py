@@ -1,11 +1,30 @@
 from typing import List, Dict, Any
-from ..clients.qdrant_client import qdrant_client
-from ..clients.cohere_client import cohere_client
-from ..config import config
-from ..utils.logger import log_info, log_error, log_warning
-from ..utils.metadata_extractor import metadata_extractor
-from ..utils.db_connection import db_manager
-from ..models.document_model import Chunk
+
+# Handle relative imports for direct execution
+try:
+    from ..clients.qdrant_client import qdrant_client
+    from ..clients.cohere_client import cohere_client
+    from ..config import config
+    from ..utils.logger import log_info, log_error, log_warning
+    from ..utils.metadata_extractor import metadata_extractor
+    from ..utils.db_connection import db_manager
+    from ..models.document_model import Chunk
+except (ImportError, ValueError):
+    # Fallback for direct execution
+    import sys
+    from pathlib import Path
+    # Add the backend directory to the path
+    backend_dir = Path(__file__).parent.parent
+    sys.path.insert(0, str(backend_dir))
+
+    from clients.qdrant_client import qdrant_client
+    from clients.cohere_client import cohere_client
+    from config import config
+    from utils.logger import log_info, log_error, log_warning
+    from utils.metadata_extractor import metadata_extractor
+    from utils.db_connection import db_manager
+    from models.document_model import Chunk
+
 from sqlalchemy.orm import Session
 from sqlalchemy.exc import SQLAlchemyError
 

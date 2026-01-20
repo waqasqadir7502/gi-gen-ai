@@ -1,8 +1,19 @@
 from qdrant_client import QdrantClient
 from qdrant_client.http import models
-from ..config import config
 from typing import List, Dict, Any
 import uuid
+
+# Handle relative imports for direct execution
+try:
+    from ..config import config
+except (ImportError, ValueError):
+    # Fallback for direct execution
+    import sys
+    from pathlib import Path
+    # Add the backend directory to the path
+    backend_dir = Path(__file__).parent.parent
+    sys.path.insert(0, str(backend_dir))
+    from config import config
 
 class QdrantRAGClient:
     def __init__(self):
@@ -92,8 +103,18 @@ class QdrantRAGClient:
 
             return results
         except Exception as e:
-            print(f"Error searching vectors: {e}")
-            return []
+            # Try the older parameter name if the new one fails
+            try:
+                results = self.client.search(
+                    collection_name=config.COLLECTION_NAME,
+                    vector=query_vector,
+                    limit=top_k,
+                    query_filter=search_filter
+                )
+                return results
+            except Exception as e2:
+                print(f"Error searching vectors: {e}, fallback error: {e2}")
+                return []
 
     def delete_collection(self):
         """

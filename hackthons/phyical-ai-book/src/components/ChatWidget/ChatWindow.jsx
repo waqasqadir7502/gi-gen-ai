@@ -41,10 +41,19 @@ const ChatWindow = ({ onClose, onMinimize }) => {
       for (let attempt = 1; attempt <= maxRetries; attempt++) {
         try {
           // Call the backend API with timeout
+          // Use appropriate API endpoint based on environment
+          // During local development, we'll use http://localhost:8000
+          // For Vercel deployment, use the deployed backend URL
+
+          const isLocalhost = typeof window !== 'undefined' && window.location.hostname === 'localhost';
+          const apiBaseUrl = isLocalhost ? 'http://localhost:8000' : 'https://physical-ai-book-lilac.vercel.app'; // Deployed backend URL
+
           const controller = new AbortController();
           const timeoutId = setTimeout(() => controller.abort(), 30000); // 30 second timeout
 
-          response = await fetch('/api/chat', {
+          const apiUrl = apiBaseUrl ? `${apiBaseUrl}/api/chat` : '/api/chat';
+
+          response = await fetch(apiUrl, {
             method: 'POST',
             headers: {
               'Content-Type': 'application/json',

@@ -1,8 +1,20 @@
 from fastapi import HTTPException, Request, status
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
-from ..config import config
-from ..utils.logger import log_info, log_error
 import time
+
+# Handle relative imports for direct execution
+try:
+    from ..config import config
+    from ..utils.logger import log_info, log_error
+except (ImportError, ValueError):
+    # Fallback for direct execution
+    import sys
+    from pathlib import Path
+    # Add the backend directory to the path
+    backend_dir = Path(__file__).parent.parent
+    sys.path.insert(0, str(backend_dir))
+    from config import config
+    from utils.logger import log_info, log_error
 
 class APIKeyAuth:
     def __init__(self):

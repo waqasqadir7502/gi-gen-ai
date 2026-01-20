@@ -9,9 +9,14 @@ from qdrant_client import QdrantClient
 from qdrant_client.http.models import VectorParams, Distance
 from qdrant_client.http.exceptions import UnexpectedResponse
 
-# Absolute imports (safe for Vercel serverless)
-from backend.api.health import router as health_router
-from backend.api.chat import router as chat_router
+# Use absolute imports when running directly
+try:
+    from .api.health import router as health_router
+    from .api.chat import router as chat_router
+except ImportError:
+    # Fallback for direct execution
+    from api.health import router as health_router
+    from api.chat import router as chat_router
 
 # Load environment variables
 load_dotenv()
@@ -111,6 +116,6 @@ def read_root():
     return {"message": "Physical AI Book RAG Chatbot API is running", "status": "operational"}
 
 # Optional local dev block (commented - safe to leave)
-# if __name__ == "__main__":
-#     import uvicorn
-#     uvicorn.run(app, host="0.0.0.0", port=8001)
+if __name__ == "__main__":
+    import uvicorn
+    uvicorn.run(app, host="0.0.0.0", port=8000)

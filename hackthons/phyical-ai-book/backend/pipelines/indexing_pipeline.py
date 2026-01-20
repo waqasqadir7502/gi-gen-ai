@@ -71,8 +71,17 @@ class IndexingPipeline:
             success = qdrant_client.upsert_vectors(vectors, payloads, ids)
 
             if success:
-                # Save metadata to Neon database as well
-                self._save_metadata_to_database(embedded_chunks, ids)
+                # Save metadata to Neon database as well (only if db_manager is available)
+                try:
+                    from ..utils.db_connection import db_manager
+                    if db_manager:
+                        self._save_metadata_to_database(embedded_chunks, ids)
+                except ImportError:
+                    # Database not configured, just log and continue
+                    log_info("Database not configured, skipping metadata storage", extra={
+                        "collection_name": self.collection_name,
+                        "vectors_upserted": len(vectors)
+                    })
 
                 log_info(f"Successfully upserted {len(vectors)} vectors to Qdrant", extra={
                     "collection_name": self.collection_name,
@@ -93,12 +102,21 @@ class IndexingPipeline:
         """
         Save document and chunk metadata to Neon database
         """
-        if not db_manager.engine:
-            log_warning("Neon database not configured, skipping metadata storage")
+        try:
+            from ..utils.db_connection import db_manager
+            if not hasattr(db_manager, 'engine') or not db_manager.engine:
+                log_warning("Neon database not configured, skipping metadata storage")
+                return
+        except ImportError:
+            log_warning("Database module not available, skipping metadata storage")
             return
 
         try:
             session = db_manager.get_session()
+
+            # Import Document and Chunk models here to avoid circular imports
+            from ..models.document_model import Document, Chunk
+            from sqlalchemy.exc import SQLAlchemyError
 
             for i, chunk in enumerate(embedded_chunks):
                 if i >= len(qdrant_ids):
@@ -138,10 +156,6 @@ class IndexingPipeline:
             session.commit()
             log_info(f"Saved metadata for {len(embedded_chunks)} chunks to Neon database")
 
-        except SQLAlchemyError as e:
-            log_error(f"Database error saving metadata: {str(e)}")
-            if 'session' in locals():
-                session.rollback()
         except Exception as e:
             log_error(f"Error saving metadata to Neon database: {str(e)}")
             if 'session' in locals():

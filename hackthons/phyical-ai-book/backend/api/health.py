@@ -1,7 +1,21 @@
 from fastapi import APIRouter
-from ..clients.cohere_client import cohere_client
-from ..clients.qdrant_client import qdrant_client
-from ..config import config
+
+# Handle relative imports for direct execution
+try:
+    from ..clients.cohere_client import cohere_client
+    from ..clients.qdrant_client import qdrant_client
+    from ..config import config
+except (ImportError, ValueError):
+    # Fallback for direct execution
+    import sys
+    from pathlib import Path
+    # Add the backend directory to the path
+    backend_dir = Path(__file__).parent.parent
+    sys.path.insert(0, str(backend_dir))
+
+    from clients.cohere_client import cohere_client
+    from clients.qdrant_client import qdrant_client
+    from config import config
 
 router = APIRouter(prefix="/health", tags=["health"])
 

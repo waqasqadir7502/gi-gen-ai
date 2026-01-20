@@ -4,6 +4,7 @@ Ingestion script for Physical AI Book documentation - safe for Vercel & API usag
 """
 
 import os
+import traceback
 from pathlib import Path
 import sys
 
@@ -46,8 +47,8 @@ def run_ingestion(docs_path: str = "docs", batch_size: int = 10, skip_duplicates
         log_info(f"Extracting content from {docs_root}...")
 
         # Configure extractor
-        extractor.docs_path = docs_root
-        parsed_documents = extractor.extract_from_docs_folder()
+        content_extractor.docs_path = docs_root
+        parsed_documents = content_extractor.extract_from_docs_folder()
 
         log_info(f"Extracted {len(parsed_documents)} documents")
 
@@ -63,8 +64,7 @@ def run_ingestion(docs_path: str = "docs", batch_size: int = 10, skip_duplicates
         log_info("Starting indexing process...")
         results = indexing_pipeline.index_documents_batch(
             parsed_documents,
-            batch_size=batch_size,
-            skip_duplicates=skip_duplicates
+            batch_size=batch_size
         )
 
         # Summary

@@ -1,8 +1,19 @@
 import time
 from typing import Dict, Optional
 from fastapi import HTTPException, Request
-from ..utils.logger import log_warning, log_info
 from datetime import datetime, timedelta
+
+# Handle relative imports for direct execution
+try:
+    from ..utils.logger import log_warning, log_info
+except (ImportError, ValueError):
+    # Fallback for direct execution
+    import sys
+    from pathlib import Path
+    # Add the backend directory to the path
+    backend_dir = Path(__file__).parent.parent
+    sys.path.insert(0, str(backend_dir))
+    from utils.logger import log_warning, log_info
 
 class RateLimiter:
     def __init__(self, requests_per_minute: int = 10):

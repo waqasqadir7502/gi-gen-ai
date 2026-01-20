@@ -1,9 +1,34 @@
 from typing import Dict, Any, List
 import re
-from ..clients.cohere_client import cohere_client
-from ..prompts.chat_prompt import chat_prompt_engineer
-from ..utils.logger import log_info, log_error, log_warning
-from ..utils.metadata_extractor import metadata_extractor
+
+# Handle relative imports for direct execution
+try:
+    from ..clients.cohere_client import cohere_client
+    from ..prompts.chat_prompt import chat_prompt_engineer
+    from ..utils.logger import log_info, log_error, log_warning
+    from ..utils.metadata_extractor import metadata_extractor
+except (ImportError, ValueError):
+    # Fallback for direct execution
+    import sys
+    from pathlib import Path
+    # Add the backend directory to the path
+    backend_dir = Path(__file__).parent.parent
+    sys.path.insert(0, str(backend_dir))
+
+    try:
+        from clients.cohere_client import cohere_client
+        from prompts.chat_prompt import chat_prompt_engineer
+        from utils.logger import log_info, log_error, log_warning
+        from utils.metadata_extractor import metadata_extractor
+    except ImportError:
+        print("Could not import services - using fallbacks")
+        # Define minimal fallbacks for testing
+        class MockCohereClient:
+            def generate(self, prompt, **kwargs):
+                return "Mock response for testing"
+
+        cohere_client = MockCohereClient()
+        chat_prompt_engineer = None
 
 class GenerationService:
     def __init__(self):
