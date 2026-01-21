@@ -10,7 +10,6 @@ from pathlib import Path
 backend_dir = Path(__file__).parent.parent / "backend"
 sys.path.insert(0, str(backend_dir))
 
-# Import required modules
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.middleware.gzip import GZipMiddleware
@@ -20,7 +19,7 @@ from mangum import Mangum
 # Load environment variables
 load_dotenv()
 
-# Create a new FastAPI app instance specifically for Vercel
+# Create a new FastAPI app instance
 app = FastAPI(
     title="Physical AI Book RAG Chatbot API",
     description="API for the Physical AI Book RAG Chatbot",
@@ -63,7 +62,7 @@ async def add_security_headers(request, call_next):
 
 # Import routers with comprehensive error handling
 try:
-    # Try to import the routers from backend
+    # Add backend to path and import using absolute imports
     from backend.api.chat import router as chat_router
     from backend.api.health import router as health_router
 
@@ -75,14 +74,13 @@ try:
 
 except ImportError as e:
     print(f"Error importing API routers: {e}")
-    # Create fallback endpoints
     from fastapi import APIRouter
 
-    # Create fallback routers
-    fallback_chat_router = APIRouter()
-    fallback_health_router = APIRouter()
+    # Create simple fallback routers
+    chat_router = APIRouter()
+    health_router = APIRouter()
 
-    @fallback_chat_router.post("/chat")
+    @chat_router.post("/chat")
     async def fallback_chat():
         return {
             "answer": "Service temporarily unavailable due to import errors. Please contact the administrator.",
@@ -90,7 +88,7 @@ except ImportError as e:
             "metadata": {"error": str(e), "status": "degraded"}
         }
 
-    @fallback_health_router.get("/")
+    @health_router.get("/")
     async def fallback_health():
         return {
             "status": "degraded",
@@ -99,8 +97,8 @@ except ImportError as e:
         }
 
     # Include the fallback routers
-    app.include_router(fallback_chat_router, prefix="/api")
-    app.include_router(fallback_health_router, prefix="/health")
+    app.include_router(chat_router, prefix="/api")
+    app.include_router(health_router, prefix="/health")
 
     print("Fallback routers created and included")
 
@@ -109,7 +107,12 @@ except ImportError as e:
 def read_root():
     return {"message": "Physical AI Book RAG Chatbot API is running", "status": "operational"}
 
-# Create the ASGI handler for Vercel
+# Create the ASGI handler for Vercel - this is the main entry point for the serverless function
 handler = Mangum(app, lifespan="off")
 
 print("Vercel API handler initialized successfully")
+
+# For local testing
+if __name__ == "__main__":
+    import uvicorn
+    uvicorn.run(app, host="127.0.0.1", port=8000)

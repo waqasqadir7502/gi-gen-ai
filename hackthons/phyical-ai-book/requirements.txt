@@ -13,7 +13,7 @@
 # beautifulsoup4==4.12.3
 # tiktoken==0.8.0
 
-# Minimal requirements.txt for your RAG API on Vercel
+# Requirements for your RAG API on Vercel
 fastapi==0.115.0
 uvicorn==0.32.0
 cohere==5.11.0
@@ -26,3 +26,4 @@ mistune==3.0.2
 httpx==0.27.2
 beautifulsoup4==4.12.3
 mangum==0.17.0
+SQLAlchemy==2.0.35
