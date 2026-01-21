@@ -80,6 +80,23 @@ class GenerationService:
             # Build the RAG prompt with grounding instructions
             prompt, sources = chat_prompt_engineer.build_rag_prompt(query, context_chunks, selected_context)
 
+            # Check if cohere client is available before generating
+            if cohere_client.client is None:
+                log_warning("Cohere client not available, returning fallback response", extra={
+                    "query_length": len(query),
+                    "context_chunks_count": len(context_chunks)
+                })
+                return {
+                    "answer": "The AI service is temporarily unavailable. Please contact the administrator.",
+                    "sources": [],
+                    "metadata": {
+                        "model_used": "none",
+                        "context_chunks_used": len(context_chunks),
+                        "generation_timestamp": __import__('datetime').datetime.now().isoformat(),
+                        "service_unavailable": True
+                    }
+                }
+
             # Generate response using Cohere
             response_text = cohere_client.generate(
                 prompt=prompt,

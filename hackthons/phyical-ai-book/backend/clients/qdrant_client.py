@@ -17,19 +17,31 @@ except (ImportError, ValueError):
 
 class QdrantRAGClient:
     def __init__(self):
-        # Initialize Qdrant client
-        self.client = QdrantClient(
-            url=config.QDRANT_URL,
-            api_key=config.QDRANT_API_KEY,
-        )
+        # Check if required config is available before initializing
+        if not config.QDRANT_URL or not config.QDRANT_API_KEY:
+            print("Warning: Qdrant configuration not found. Qdrant client will be in offline mode.")
+            self.client = None
+            return
 
-        # Try to create collection if it doesn't exist, but don't fail on connection issues
         try:
-            self._create_collection_if_not_exists()
+            # Initialize Qdrant client
+            self.client = QdrantClient(
+                url=config.QDRANT_URL,
+                api_key=config.QDRANT_API_KEY,
+            )
+
+            # Try to create collection if it doesn't exist, but don't fail on connection issues
+            try:
+                self._create_collection_if_not_exists()
+            except Exception as e:
+                print(f"Warning: Could not connect to Qdrant during initialization: {e}")
+                print("The application will continue to run but may have issues with vector storage.")
+                print("Make sure your Qdrant credentials are correct.")
+                self.client = None  # Set to None if connection fails
         except Exception as e:
-            print(f"Warning: Could not connect to Qdrant during initialization: {e}")
-            print("The application will continue to run but may have issues with vector storage.")
-            print("Make sure your Qdrant credentials are correct.")
+            print(f"Error initializing Qdrant client: {e}")
+            print("Qdrant client will be in offline mode.")
+            self.client = None
 
     def _create_collection_if_not_exists(self):
         """

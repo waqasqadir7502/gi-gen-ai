@@ -60,7 +60,7 @@ async def add_security_headers(request, call_next):
     response.headers["Permissions-Policy"] = "geolocation=(), microphone=(), camera=()"
     return response
 
-# Import and include routers with proper prefixes
+# Import and include routers with error handling
 try:
     # Try relative imports first
     from .health import router as health_router
@@ -73,8 +73,23 @@ except (ImportError, ValueError):
     backend_dir = Path(__file__).parent.parent
     sys.path.insert(0, str(backend_dir))
 
-    from health import router as health_router
-    from chat import router as chat_router
+    try:
+        from health import router as health_router
+        from chat import router as chat_router
+    except ImportError as e:
+        print(f"Error importing routers: {e}")
+        # Define minimal fallback routers in case of import errors
+        from fastapi import APIRouter
+        health_router = APIRouter()
+        chat_router = APIRouter()
+
+        @health_router.get("/")
+        async def fallback_health():
+            return {"status": "degraded", "error": "Health router failed to load"}
+
+        @chat_router.post("/chat")
+        async def fallback_chat():
+            return {"answer": "Chat service temporarily unavailable", "sources": [], "metadata": {"error": "Chat router failed to load"}}
 
 app.include_router(health_router, prefix="", tags=["health"])
 app.include_router(chat_router, prefix="/api", tags=["chat"])  # Add /api prefix at the app level

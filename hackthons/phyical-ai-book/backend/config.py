@@ -40,15 +40,19 @@ class Config:
     MAX_RESPONSE_TIME_S = 5
     MAX_VECTOR_SEARCH_TIME_S = 2
 
-# Validate required environment variables
+# Validate required environment variables (non-blocking for serverless)
 def validate_config():
     required_vars = ["COHERE_API_KEY", "QDRANT_URL", "QDRANT_API_KEY", "BACKEND_API_KEY"]
     missing_vars = [var for var in required_vars if not os.getenv(var)]
 
     if missing_vars:
-        raise ValueError(f"Missing required environment variables: {', '.join(missing_vars)}")
+        print(f"Warning: Missing required environment variables: {', '.join(missing_vars)}")
+        print("Some features may be disabled until these are configured.")
+        return False
 
-# Validate configuration on import
-validate_config()
+    return True
+
+# Validate configuration on import but don't crash
+config_valid = validate_config()
 
 config = Config()

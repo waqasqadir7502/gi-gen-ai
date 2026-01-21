@@ -2,8 +2,8 @@ from typing import List, Dict, Any
 
 # Handle relative imports for direct execution
 try:
-    from ..clients.qdrant_client import qdrant_client
-    from ..clients.cohere_client import cohere_client
+    from ..clients.qdrant_client import QdrantRAGClient
+    from ..clients.cohere_client import CohereClient
     from ..config import config
     from ..utils.logger import log_info, log_error, log_warning
     from ..utils.metadata_extractor import metadata_extractor
@@ -17,13 +17,33 @@ except (ImportError, ValueError):
     backend_dir = Path(__file__).parent.parent
     sys.path.insert(0, str(backend_dir))
 
-    from clients.qdrant_client import qdrant_client
-    from clients.cohere_client import cohere_client
+    from clients.qdrant_client import QdrantRAGClient
+    from clients.cohere_client import CohereClient
     from config import config
     from utils.logger import log_info, log_error, log_warning
     from utils.metadata_extractor import metadata_extractor
     from utils.db_connection import db_manager
     from models.document_model import Chunk
+
+# Create client instances
+try:
+    qdrant_client = QdrantRAGClient()
+    cohere_client = CohereClient()
+except Exception as e:
+    print(f"Error initializing clients: {e}")
+    # Create mock clients that return error responses
+    class MockQdrantClient:
+        def search(self, query_vector, top_k=5, filters=None):
+            print("Mock Qdrant client called - client not available")
+            return []
+
+    class MockCohereClient:
+        def embed_query(self, query):
+            print("Mock Cohere client called - client not available")
+            return [0.0] * 1024  # Return a dummy embedding
+
+    qdrant_client = MockQdrantClient()
+    cohere_client = MockCohereClient()
 
 from sqlalchemy.orm import Session
 from sqlalchemy.exc import SQLAlchemyError
@@ -39,6 +59,13 @@ class RetrievalService:
         """
         if top_k is None:
             top_k = self.top_k
+
+        # Check if Qdrant client is available
+        if qdrant_client.client is None:
+            log_warning("Qdrant client not available, returning empty results", extra={
+                "query": query[:100] + "..." if len(query) > 100 else query
+            })
+            return []
 
         try:
             # Embed the query using Cohere

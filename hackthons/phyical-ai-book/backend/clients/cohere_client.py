@@ -14,15 +14,31 @@ except (ImportError, ValueError):
 
 class CohereClient:
     def __init__(self):
-        self.client = cohere.Client(config.COHERE_API_KEY)
-        self.embedding_model = "embed-english-v3.0"
-        self.generation_model = "command-r-08-2024"  # Updated to available model
-        self.fallback_generation_model = "command-light"  # Updated to available fallback
+        # Check if required config is available before initializing
+        if not config.COHERE_API_KEY:
+            print("Warning: Cohere API key not found. Cohere client will be in offline mode.")
+            self.client = None
+            return
+
+        try:
+            self.client = cohere.Client(config.COHERE_API_KEY)
+            self.embedding_model = "embed-english-v3.0"
+            self.generation_model = "command-r-08-2024"  # Updated to available model
+            self.fallback_generation_model = "command-light"  # Updated to available fallback
+        except Exception as e:
+            print(f"Error initializing Cohere client: {e}")
+            print("Cohere client will be in offline mode.")
+            self.client = None
 
     def embed(self, texts, input_type="search_document"):
         """
         Generate embeddings for the given texts using Cohere's embed model
         """
+        if self.client is None:
+            print("Cohere client not available, returning dummy embeddings")
+            # Return dummy embeddings (same dimension as real embeddings)
+            return [[0.0] * 1024 for _ in range(len(texts))]
+
         try:
             response = self.client.embed(
                 texts=texts,
@@ -32,7 +48,8 @@ class CohereClient:
             return response.embeddings
         except Exception as e:
             print(f"Error generating embeddings: {e}")
-            raise
+            # Return dummy embeddings as fallback
+            return [[0.0] * 1024 for _ in range(len(texts))]
 
     def embed_query(self, query):
         """
@@ -44,6 +61,10 @@ class CohereClient:
         """
         Generate text using Cohere's command-r model (updated to use Chat API)
         """
+        if self.client is None:
+            print("Cohere client not available, returning default response")
+            return "Cohere service is temporarily unavailable. Please contact the administrator."
+
         try:
             # Use the new Chat API instead of the deprecated Generate API
             response = self.client.chat(
@@ -73,17 +94,20 @@ class CohereClient:
             print(f"Error during generation: {e}")
             # Fallback to command-r-plus if command-r fails
             try:
-                fallback_response = self.client.chat(
-                    model=self.fallback_generation_model,
-                    message=prompt,
-                    max_tokens=max_tokens,
-                    temperature=temperature
-                )
+                if self.client is not None:
+                    fallback_response = self.client.chat(
+                        model=self.fallback_generation_model,
+                        message=prompt,
+                        max_tokens=max_tokens,
+                        temperature=temperature
+                    )
 
-                if fallback_response.text:
-                    return fallback_response.text
+                    if fallback_response and fallback_response.text:
+                        return fallback_response.text
+                    else:
+                        return "Unable to generate a response at this time."
                 else:
-                    return "Unable to generate a response at this time."
+                    return "Unable to generate a response at this time due to service unavailability."
             except Exception as fallback_error:
                 print(f"Fallback generation also failed: {fallback_error}")
                 return "Unable to generate a response at this time."
