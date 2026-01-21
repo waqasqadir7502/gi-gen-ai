@@ -25,5 +25,12 @@
 
     { "handle": "filesystem" },
     { "src": "/(.*)", "dest": "/" }
-  ]
+  ],
+  "functions": {
+    "api/index.py": {
+      "maxDuration": 30,
+      "memory": 1024,
+      "excludeFiles": "{node_modules/**,venv/**,env/**,.git/**,*.md,*.pyc,__pycache__/**,tests/**,docs/**,build/**,dist/**,.next/**,.vercel/**,fixtures/**,samples/**,examples/**}"
+    }
+  }
 }

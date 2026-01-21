@@ -1,4 +1,5 @@
-import cohere
+import requests
+import json
 
 # Handle relative imports for direct execution
 try:
@@ -17,18 +18,87 @@ class CohereClient:
         # Check if required config is available before initializing
         if not config.COHERE_API_KEY:
             print("Warning: Cohere API key not found. Cohere client will be in offline mode.")
-            self.client = None
+            self.api_key = None
             return
 
+        self.api_key = config.COHERE_API_KEY
+        self.base_url = "https://api.cohere.ai/v1"
+        self.embedding_model = "embed-english-v3.0"
+        self.generation_model = "command-r-plus-08-2024"
+        self.fallback_generation_model = "command-r"
+
+    def embed_query(self, query):
+        """
+        Generate embedding for a single query using Cohere's API via HTTP requests
+        """
+        if not self.api_key:
+            print("Cohere API key not available, returning dummy embedding")
+            return [0.0] * 1024  # Return a dummy embedding
+
         try:
-            self.client = cohere.Client(config.COHERE_API_KEY)
-            self.embedding_model = "embed-english-v3.0"
-            self.generation_model = "command-r-08-2024"  # Updated to available model
-            self.fallback_generation_model = "command-light"  # Updated to available fallback
+            headers = {
+                "Authorization": f"Bearer {self.api_key}",
+                "Content-Type": "application/json"
+            }
+
+            data = {
+                "texts": [query],
+                "model": self.embedding_model,
+                "input_type": "search_query"
+            }
+
+            response = requests.post(f"{self.base_url}/embed", headers=headers, json=data)
+
+            if response.status_code == 200:
+                result = response.json()
+                return result["embeddings"][0]  # Return the first embedding
+            else:
+                print(f"Cohere embedding request failed: {response.status_code} - {response.text}")
+                return [0.0] * 1024  # Return dummy embedding on failure
         except Exception as e:
-            print(f"Error initializing Cohere client: {e}")
-            print("Cohere client will be in offline mode.")
-            self.client = None
+            print(f"Error generating embedding: {e}")
+            return [0.0] * 1024  # Return dummy embedding on exception
+
+    def generate(self, prompt, max_tokens=500, temperature=0.3):
+        """
+        Generate text using Cohere's API via HTTP requests
+        """
+        if not self.api_key:
+            print("Cohere API key not available, returning default response")
+            return "Cohere service is temporarily unavailable. Please contact the administrator."
+
+        try:
+            headers = {
+                "Authorization": f"Bearer {self.api_key}",
+                "Content-Type": "application/json"
+            }
+
+            data = {
+                "model": self.generation_model,
+                "message": prompt,
+                "max_tokens": max_tokens,
+                "temperature": temperature
+            }
+
+            response = requests.post(f"{self.base_url}/chat", headers=headers, json=data)
+
+            if response.status_code == 200:
+                result = response.json()
+                return result.get("text", result.get("response", "No response generated"))
+            else:
+                # Try with fallback model
+                data["model"] = self.fallback_generation_model
+                response = requests.post(f"{self.base_url}/chat", headers=headers, json=data)
+
+                if response.status_code == 200:
+                    result = response.json()
+                    return result.get("text", result.get("response", "No response generated"))
+                else:
+                    print(f"Cohere generation request failed: {response.status_code} - {response.text}")
+                    return "Unable to generate a response at this time."
+        except Exception as e:
+            print(f"Error during generation: {e}")
+            return "Unable to generate a response at this time."
 
     def embed(self, texts, input_type="search_document"):
         """
