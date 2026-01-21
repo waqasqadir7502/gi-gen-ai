@@ -1,15 +1,20 @@
+"""
+Vercel-compatible entry point for the Physical AI Book RAG Chatbot API
+This file acts as the handler for Vercel's Python runtime using the ASGI adapter
+"""
 import os
 import sys
 from pathlib import Path
 
-# Add the backend directory to the Python path to allow imports
-backend_dir = Path(__file__).parent
+# Add the backend directory to the Python path
+backend_dir = Path(__file__).parent.parent
 sys.path.insert(0, str(backend_dir))
 
 from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.middleware.gzip import GZipMiddleware
 from dotenv import load_dotenv
+from mangum import Mangum
 
 # Load environment variables
 load_dotenv()
@@ -28,7 +33,7 @@ app.add_middleware(
     minimum_size=1000,
 )
 
-# CORS - safe origins
+# CORS - safe origins for Vercel deployment
 app.add_middleware(
     CORSMiddleware,
     allow_origins=[
@@ -42,7 +47,7 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# Security headers middleware (unchanged)
+# Security headers middleware
 @app.middleware("http")
 async def add_security_headers(request, call_next):
     response = await call_next(request)
@@ -54,53 +59,29 @@ async def add_security_headers(request, call_next):
     response.headers["Permissions-Policy"] = "geolocation=(), microphone=(), camera=()"
     return response
 
-# Import routers with error handling for Vercel serverless environment
+# Import routers with error handling
 try:
-    # Try relative imports first (for when run as module)
-    from .api.health import router as health_router
-    from .api.chat import router as chat_router
+    # Try relative imports first
+    from .health import router as health_router
+    from .chat import router as chat_router
 except (ImportError, ValueError):
-    try:
-        # Try absolute imports (for direct execution)
-        import sys
-        from pathlib import Path
-        # Add the backend directory to the path
-        backend_dir = Path(__file__).parent
-        sys.path.insert(0, str(backend_dir))
+    # Fallback to absolute imports
+    import sys
+    from pathlib import Path
+    # Add the backend directory to the path
+    backend_dir = Path(__file__).parent.parent
+    sys.path.insert(0, str(backend_dir))
 
-        from api.health import router as health_router
-        from api.chat import router as chat_router
-    except ImportError as e:
-        print(f"Error importing routers: {e}")
-        # Create fallback routers that return error responses
-        from fastapi import APIRouter
-
-        health_router = APIRouter()
-        chat_router = APIRouter()
-
-        @health_router.get("/")
-        def fallback_health():
-            return {
-                "status": "degraded",
-                "error": "Health router failed to load",
-                "details": str(e)
-            }
-
-        @chat_router.post("/chat")
-        def fallback_chat():
-            return {
-                "answer": "Chat service temporarily unavailable due to import errors. Please contact the administrator.",
-                "sources": [],
-                "metadata": {"error": str(e)}
-            }
+    from health import router as health_router
+    from chat import router as chat_router
 
 # Include routers
 app.include_router(health_router)
 app.include_router(chat_router)
 
-# Health check (enhanced)
+# Health check endpoint
 @app.get("/health")
-def simple_health():
+def health_check():
     return {
         "status": "healthy",
         "service": "api-main",
@@ -113,6 +94,10 @@ def simple_health():
 def read_root():
     return {"message": "Physical AI Book RAG Chatbot API is running", "status": "operational"}
 
+# Create the ASGI handler for Vercel
+handler = Mangum(app, lifespan="off")
+
+# For local development
 if __name__ == "__main__":
     import uvicorn
     uvicorn.run(app, host="127.0.0.1", port=8000)
