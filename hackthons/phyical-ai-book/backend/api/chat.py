@@ -26,7 +26,7 @@ except (ImportError, ValueError):
     from middleware.rate_limiter import check_rate_limit
     from utils.logger import log_info, log_error
 
-router = APIRouter(prefix="/api", tags=["chat"])
+router = APIRouter(tags=["chat"])
 
 # Define request/response models (unchanged)
 class ChatRequest(BaseModel):
@@ -80,7 +80,7 @@ async def chat_endpoint(request: ChatRequest):
                 **generation_result["metadata"],
                 "retrieval_success": True,
                 "chunks_found": len(retrieved_chunks),
-                "chunks_used": len(retrieved_chunks[:3]),
+                "chunks_used": min(len(retrieved_chunks), 3),
                 "processing_timestamp": __import__('datetime').datetime.now().isoformat()
             }
         )
@@ -97,9 +97,9 @@ async def chat_endpoint(request: ChatRequest):
 
     except Exception as e:
         log_error(f"Error in chat endpoint: {str(e)}", extra={
-            "question": request.question[:100],
+            "question": request.question[:100] if request.question else "empty",
             "error_type": type(e).__name__,
-            "traceback": "".join(__import__('traceback').format_exception(type(e), e, e.__traceback__))
+            "traceback": "".join(__import__('traceback').format_exception(type(e), e, e.__traceback__)) if hasattr(e, '__traceback__') else "no traceback"
         })
 
         return ChatResponse(

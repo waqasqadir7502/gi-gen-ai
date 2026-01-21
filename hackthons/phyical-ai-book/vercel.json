@@ -2,8 +2,11 @@
   "version": 2,
   "builds": [
     {
-      "src": "api/index.py",
-      "use": "@vercel/python"
+      "src": "backend/api/index.py",
+      "use": "@vercel/python",
+      "config": {
+        "runtime": "python3.9"
+      }
     },
     {
       "src": "package.json",
@@ -15,10 +18,10 @@
     }
   ],
   "routes": [
-    { "src": "/api/(.*)", "dest": "/api/index.py" },
-    { "src": "/health", "dest": "/api/index.py" },
-    { "src": "/docs", "dest": "/api/index.py" },
-    { "src": "/redoc", "dest": "/api/index.py" },
+    { "src": "/api/(.*)", "dest": "/backend/api/index.py" },
+    { "src": "/health", "dest": "/backend/api/index.py" },
+    { "src": "/docs", "dest": "/backend/api/index.py" },
+    { "src": "/redoc", "dest": "/backend/api/index.py" },
 
     { "handle": "filesystem" },
     { "src": "/(.*)", "dest": "/" }

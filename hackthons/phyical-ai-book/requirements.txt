@@ -25,3 +25,4 @@ markdown==3.7
 mistune==3.0.2
 httpx==0.27.2
 beautifulsoup4==4.12.3
+mangum==0.17.0
